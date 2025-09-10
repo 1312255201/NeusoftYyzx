@@ -1,0 +1,77 @@
+# 项目通用忽略规则
+.DS_Store
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 后端Java项目忽略规则
+# 编译输出
+/backend/target/
+/backend/out/
+/backend/build/
+
+# Maven相关
+/backend/.mvn/
+/backend/mvnw
+/backend/mvnw.cmd
+/backend/pom.xml.tag
+/backend/pom.xml.releaseBackup
+/backend/pom.xml.versionsBackup
+/backend/pom.xml.next
+/backend/release.properties
+/backend/dependency-reduced-pom.xml
+/backend/buildNumber.properties
+/backend/.mvn/timing.properties
+
+# 日志文件
+/backend/logs/
+/backend/*.log
+
+# 前端Vue项目忽略规则
+# 依赖包
+/frontend/node_modules/
+/frontend/dist/
+
+# 本地环境文件
+/frontend/.env.local
+/frontend/.env.*.local
+
+# 日志文件
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend/pnpm-debug.log*
+
+# 测试覆盖率报告
+/frontend/coverage/
+
+# 编辑器目录和文件
+/frontend/.idea/
+/frontend/.vscode/
+/frontend/*.suo
+/frontend/*.ntvs*
+/frontend/*.njsproj
+/frontend/*.sln
+/frontend/*.sw?
+
+# 备份文件
+*.bak
+
+# 临时文件
+/temp/
+/tmp/
+
+# 归档文件
+*.zip
+*.tar.gz
+*.rar
+
+# 其他不需要版本控制的文件
+/backup*/
