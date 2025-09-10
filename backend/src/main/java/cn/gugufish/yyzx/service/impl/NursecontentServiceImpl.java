@@ -22,7 +22,7 @@ public class NursecontentServiceImpl extends ServiceImpl<NursecontentMapper, Nur
     private NurselevelitemMapper nurselevelitemMapper;
 
     @Override
-    public ResultVo<List<Nursecontent>> listNurseItemByLevel(Integer levelId) throws Exception {
+    public List<Nursecontent> listNurseItemByLevel(Integer levelId) throws Exception {
         //①先查询级别的项目配置-只查询item_id
         QueryWrapper qw = new QueryWrapper<>();
         qw.eq("level_id", levelId);
@@ -32,9 +32,9 @@ public class NursecontentServiceImpl extends ServiceImpl<NursecontentMapper, Nur
         //判断是否有记录
         if (itemIds.size() > 0) {
             //②查询护理项目信息
-            nursecontents = nursecontentMapper.selectBatchIds(itemIds);
+            nursecontents = nursecontentMapper.selectByIds(itemIds);
         }
-        return ResultVo.ok(nursecontents);
+        return nursecontents;
     }
 
     @Transactional(rollbackFor = Exception.class)

@@ -1,76 +1,55 @@
 package cn.gugufish.yyzx.utils;
 
-import lombok.Data;
-
-
-@Data
-public class ResultVo<T> {
-    private boolean flag;
-    private String message;
-    private T data;
+/**
+ * 响应实体类封装，Rest风格
+ * @param code 状态码
+ * @param data 响应数据
+ * @param message 其他消息
+ * @param <T> 响应数据类型
+ */
+public record ResultVo<T> (boolean flag, T data, String message) {
 
     /**
      * 成功不添加data
      *
      * @return
      */
-    public static ResultVo ok(String message) {
-        ResultVo resultVo = new ResultVo();
-        resultVo.setMessage(message);
-        resultVo.setFlag(true);
-        return resultVo;
+    public static <T> ResultVo<T> ok(String message){
+        return new ResultVo<>(true, null, message);
     }
-
     /**
      * 成功添加data
      *
      * @return
      */
-    public static <T> ResultVo ok(T data) {
-        ResultVo resultVo = new ResultVo();
-        resultVo.setData(data);
-        resultVo.setFlag(true);
-        return resultVo;
+    public static <T> ResultVo<T> ok(T data){
+        return new ResultVo<>(true, data, "");
     }
-
     /**
      * 成功添加data和message
      *
      * @return
      */
-    public static <T> ResultVo ok(T data, String message) {
-        ResultVo resultVo = new ResultVo();
-        resultVo.setData(data);
-        resultVo.setFlag(true);
-        resultVo.setMessage(message);
-        return resultVo;
+    public static <T> ResultVo<T> ok(T data,String message){
+        return new ResultVo<>(true, data, message);
     }
-
     /**
      * 失败
      *
      * @param message
      * @return
      */
-    public static ResultVo fail(String message) {
-        ResultVo resultVo = new ResultVo();
-        resultVo.setFlag(false);
-        resultVo.setMessage(message);
-        return resultVo;
+    public static <T> ResultVo<T> fail(String message){
+        return new ResultVo<>(false, null, message);
     }
-
     /**
      * 失败返回状态数据
      *
      * @param message
      * @return
      */
-    public static <T> ResultVo fail(String message, T data) {
-        ResultVo resultVo = new ResultVo();
-        resultVo.setFlag(false);
-        resultVo.setMessage(message);
-        resultVo.setData(data);
-        return resultVo;
+    public static <T> ResultVo<T> fail(String message,T data){
+        return new ResultVo<>(false, data, message);
     }
 
     /**
@@ -79,10 +58,7 @@ public class ResultVo<T> {
      * @param e
      * @return
      */
-    public static ResultVo error(Exception e) {
-        ResultVo resultVo = new ResultVo();
-        resultVo.setMessage("系统异常:" + e.getMessage());
-        resultVo.setFlag(false);
-        return resultVo;
+    public static <T> ResultVo<T> error(Exception e){
+        return new ResultVo<>(false, null, "系统异常:" + e.getMessage());
     }
 }

@@ -11,43 +11,40 @@ import cn.gugufish.yyzx.service.CustomerService;
 import cn.gugufish.yyzx.utils.ResultVo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/backdown")
 @CrossOrigin
 @Tag(name = "退住管理")
 public class BackdownController {
-
-    @Autowired
+    @Resource
     private BackdownService backdownService;
 
-    @Autowired
+    @Resource
     private BedService bedService;
 
-    @Autowired
+    @Resource
     private CustomerService customerService;
 
     @Operation(summary = "查询退住信息")
     @PostMapping("/listBackdown")
-    public ResultVo listBackdown(BackdownDTO backdownDTO) throws Exception {
+    public ResultVo listBackdown(@RequestBody BackdownDTO backdownDTO) throws Exception {
         return backdownService.listBackdownVo(backdownDTO);
     }
 
     @Operation(summary = "添加退住审批")
     @PostMapping("/addBackdown")
-    public ResultVo addBackdown(Backdown backdown) throws Exception {
+    public ResultVo addBackdown(@RequestBody Backdown backdown) throws Exception {
         backdownService.save(backdown);
         return ResultVo.ok("添加成功");
     }
 
     @Operation(summary = "审批退住")
     @PostMapping("/examineBackdown")
-    public ResultVo examineBackdown(Backdown backdown) throws Exception {
+    public ResultVo examineBackdown(@RequestBody Backdown backdown) throws Exception {
         Backdown bd = backdownService.getById(backdown.getId());
         // 审批通过
         if (backdown.getAuditstatus() == 1) {
@@ -63,7 +60,7 @@ public class BackdownController {
 
     @Operation(summary = "撒回退住申请")
     @PostMapping("/delBackdown")
-    public ResultVo delBackdown(Integer id) throws Exception {
+    public ResultVo delBackdown(@RequestBody Integer id) throws Exception {
         UpdateWrapper<Backdown> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", id);
         updateWrapper.set("is_deleted", 1);
