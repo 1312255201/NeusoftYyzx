@@ -9,7 +9,7 @@ import cn.gugufish.yyzx.service.NursecontentService;
 import cn.gugufish.yyzx.utils.ResultVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "护理项目管理")
 public class NursecontentController {
 
-    @Autowired
+    @Resource
     private NursecontentService nursecontentservice;
 
     @Operation(summary = "添加护理项目")
     @PostMapping("/addNurseItem")
-    public ResultVo addNurseItem(@RequestBody Nursecontent nursecontent) throws Exception {
+    public ResultVo<Void> addNurseItem(@RequestBody Nursecontent nursecontent) throws Exception {
         nursecontent.setIsDeleted(0);
         nursecontentservice.save(nursecontent);
         return ResultVo.ok("添加成功");
@@ -67,13 +67,13 @@ public class NursecontentController {
 
     @Operation(summary = "修改护理项目")
     @PostMapping("/updateNurseItem")
-    public ResultVo updateNurseItem(@RequestBody Nursecontent nursecontent) throws Exception {
+    public ResultVo<Void> updateNurseItem(@RequestBody Nursecontent nursecontent) throws Exception {
         return nursecontentservice.updateNurseItem(nursecontent);
     }
 
     @Operation(summary = "删除护理项目")
     @GetMapping("/delNurseItem")
-    public ResultVo delNurseItem(@RequestParam Integer id) throws Exception {
+    public ResultVo<Void> delNurseItem(@RequestParam Integer id) throws Exception {
         return nursecontentservice.delNurseItem(id);
     }
 }

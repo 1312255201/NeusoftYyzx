@@ -26,7 +26,7 @@ public class BedController {
     @GetMapping("/findBed")
     @Operation(summary = "查询床位信息")
     public ResultVo<List<Bed>> findBed(Bed bed) {
-        QueryWrapper qw = new QueryWrapper();
+        QueryWrapper<Bed> qw = new QueryWrapper<>();
         if (bed.getRoomNo() != null) {
             qw.eq("room_no", bed.getRoomNo());
         }

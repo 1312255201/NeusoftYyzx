@@ -8,7 +8,7 @@ import cn.gugufish.yyzx.utils.ResultVo;
 import cn.gugufish.yyzx.vo.NurseRecordsVo;
 
 public interface NurserecordService extends IService<Nurserecord> {
-    ResultVo addNurseRecord(Nurserecord nurserecord) throws Exception;
+    ResultVo<Void> addNurseRecord(Nurserecord nurserecord) throws Exception;
 
     ResultVo<Page<NurseRecordsVo>> queryNurseRecordsVo(NurseRecordDTO nurseRecordDTO) throws Exception;
 }

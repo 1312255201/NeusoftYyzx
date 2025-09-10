@@ -32,14 +32,14 @@ public class NurselevelController {
 
     @Operation(summary = "添加护理级别")
     @PostMapping("/addNurseLevel")
-    public ResultVo addNurseLevel(@RequestBody Nurselevel nurselevel) throws Exception {
+    public ResultVo<Void> addNurseLevel(@RequestBody Nurselevel nurselevel) throws Exception {
         nurselevelService.save(nurselevel);
         return ResultVo.ok("添加护理级别成功");
     }
 
     @Operation(summary = "更新护理级别")
     @PostMapping("/updateNurseLevel")
-    public ResultVo updateNurseLevel(@RequestBody Nurselevel nurselevel) throws Exception {
+    public ResultVo<Void> updateNurseLevel(@RequestBody Nurselevel nurselevel) throws Exception {
         nurselevelService.updateById(nurselevel);
         return ResultVo.ok("更新护理级别成功");
     }
@@ -53,7 +53,7 @@ public class NurselevelController {
 
     @Operation(summary = "查询护理级别列表（分页）")
     @GetMapping("/listNurseLevel")
-    public ResultVo listNurseLevel(Nurselevel nurselevel,
+    public ResultVo<Page<Nurselevel>> listNurseLevel(Nurselevel nurselevel,
                                    @RequestParam(defaultValue = "1") int pageNo,
                                    @RequestParam(defaultValue = "9999") int pageSize) throws Exception {
         QueryWrapper<Nurselevel> qw = new QueryWrapper<>();
@@ -78,7 +78,7 @@ public class NurselevelController {
 
     @Operation(summary = "护理项目的配置")
     @PostMapping("/addItemToLevel")
-    public ResultVo addItemToLevel(@RequestBody Nurselevelitem nurselevelitem) throws Exception {
+    public ResultVo<Void> addItemToLevel(@RequestBody Nurselevelitem nurselevelitem) throws Exception {
         // 判断当前级别是否存在相同的护理项目
         QueryWrapper<Nurselevelitem> qw = new QueryWrapper<>();
         qw.eq("level_id", nurselevelitem.getLevelId());
@@ -95,7 +95,7 @@ public class NurselevelController {
 
     @Operation(summary = "删除护理级别的护理项目")
     @GetMapping("/removeNurseLevelItem")
-    public ResultVo removeNurseLevelItem(Integer levelId, Integer itemId) throws Exception {
+    public ResultVo<Void> removeNurseLevelItem(Integer levelId, Integer itemId) throws Exception {
         QueryWrapper<Nurselevelitem> qw = new QueryWrapper<>();
         qw.eq("level_id", levelId);
         qw.eq("item_id", itemId);

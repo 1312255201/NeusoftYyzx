@@ -41,8 +41,8 @@ public class UserController {
     @GetMapping("/findUserPage")
     public ResultVo<Page<User>> findUserPage(UserDTO userDTO) throws Exception {
         // 分页参数处理
-        Integer currentPage = userDTO.getPageNum() != null ? userDTO.getPageNum() : 1;
-        Integer size = userDTO.getPageSize() != null ? userDTO.getPageSize() : 10;
+        int currentPage = userDTO.getPageNum() != null ? userDTO.getPageNum() : 1;
+        int size = userDTO.getPageSize() != null ? userDTO.getPageSize() : 10;
         Page<User> page = new Page<>(currentPage, size);
 
         QueryWrapper<User> qw = new QueryWrapper<>();
@@ -66,8 +66,8 @@ public class UserController {
     @GetMapping("/findAllUserPage")
     public ResultVo<Page<User>> findAllUserPage(UserDTO userDTO) throws Exception {
         // 使用pageNum和pageSize创建分页对象
-        Integer currentPage = userDTO.getPageNum() != null ? userDTO.getPageNum() : 1;
-        Integer size = userDTO.getPageSize() != null ? userDTO.getPageSize() : 10;
+        int currentPage = userDTO.getPageNum() != null ? userDTO.getPageNum() : 1;
+        int size = userDTO.getPageSize() != null ? userDTO.getPageSize() : 10;
         Page<User> page = new Page<>(currentPage, size);
 
         QueryWrapper<User> qw = new QueryWrapper<>();
@@ -77,7 +77,7 @@ public class UserController {
 
     @Operation(summary = "添加用户")
     @PostMapping("/addUser")
-    public ResultVo addUser(@RequestBody User user) throws Exception {
+    public ResultVo<Void> addUser(@RequestBody User user) throws Exception {
         user.setIsDeleted(0);
         userService.save(user);
         return ResultVo.ok("添加成功");
@@ -85,7 +85,7 @@ public class UserController {
 
     @Operation(summary = "修改用户")
     @PostMapping("/updateUser")
-    public ResultVo updateUser(@RequestBody User user) throws Exception {
+    public ResultVo<Void>  updateUser(@RequestBody User user) throws Exception {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", user.getId());
         userService.update(user, updateWrapper);
@@ -94,7 +94,7 @@ public class UserController {
 
     @Operation(summary = "删除用户")
     @GetMapping("/delUser")
-    public ResultVo delUser(@RequestParam Integer id) throws Exception {
+    public ResultVo<Void>  delUser(@RequestParam Integer id) throws Exception {
         userService.removeById(id);
         return ResultVo.ok("删除成功");
     }

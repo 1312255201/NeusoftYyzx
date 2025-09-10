@@ -8,7 +8,7 @@ import cn.gugufish.yyzx.utils.ResultVo;
 import cn.gugufish.yyzx.vo.OutwardVo;
 
 public interface OutwardService extends IService<Outward> {
-    ResultVo examineOutward(Outward outward) throws Exception;
+    ResultVo<Void> examineOutward(Outward outward) throws Exception;
 
     ResultVo<Page<OutwardVo>> queryOutwardVo(OutwardDTO outwardDTO) throws Exception;
 }

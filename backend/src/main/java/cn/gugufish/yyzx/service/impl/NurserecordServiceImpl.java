@@ -30,7 +30,7 @@ public class NurserecordServiceImpl extends ServiceImpl<NurserecordMapper, Nurse
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo addNurseRecord(Nurserecord nurserecord) throws Exception {
+    public ResultVo<Void> addNurseRecord(Nurserecord nurserecord) throws Exception {
         // 生成护理记录
         nurserecord.setIsDeleted(0); // 默认生效
         boolean temp = save(nurserecord);

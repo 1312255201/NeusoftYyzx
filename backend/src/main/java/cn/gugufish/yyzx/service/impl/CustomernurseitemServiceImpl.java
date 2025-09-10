@@ -31,7 +31,7 @@ public class CustomernurseitemServiceImpl extends ServiceImpl<CustomernurseitemM
     private CustomerMapper customerMapper;
 
     @Override
-    public ResultVo addItemToCustomer(Integer customerId, List<Customernurseitem> customernurseitems) throws Exception {
+    public ResultVo<Void> addItemToCustomer(Integer customerId, List<Customernurseitem> customernurseitems) throws Exception {
         if (customernurseitems.size() > 0) {
             // 确保所有护理项目都设置了客户ID
             for (Customernurseitem item : customernurseitems) {

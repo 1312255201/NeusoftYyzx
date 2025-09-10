@@ -502,7 +502,6 @@
 						pageSize: 1000
 					});
 					console.log('后端返回的食品列表原始数据：', res);
-
 					if (Array.isArray(res)) {
 						this.foodList = res.map(food => this.formatFoodItem(food));
 					} else if (res) {

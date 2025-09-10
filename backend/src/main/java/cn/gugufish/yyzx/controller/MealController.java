@@ -23,21 +23,21 @@ public class MealController {
 
     @PostMapping("/addMeal")
     @Operation(summary = "添加膳食")
-    public ResultVo addMeal(@RequestBody Meal meal) throws Exception {
+    public ResultVo<Void> addMeal(@RequestBody Meal meal) throws Exception {
         mealService.save(meal);
         return ResultVo.ok("添加膳食");
     }
 
     @Operation(summary = "更新膳食")
     @PostMapping("/updateMeal")
-    public ResultVo updateMeal(@RequestBody Meal meal) throws Exception {
+    public ResultVo<Void> updateMeal(@RequestBody Meal meal) throws Exception {
         mealService.updateById(meal);
         return ResultVo.ok("更新膳食");
     }
 
     @Operation(summary = "删除膳食")
     @GetMapping("/removeMeal")
-    public ResultVo removeMeal(Integer id) throws Exception {
+    public ResultVo<Void> removeMeal(Integer id) throws Exception {
         mealService.removeById(id);
         return ResultVo.ok("删除膳食");
     }

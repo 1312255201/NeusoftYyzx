@@ -29,20 +29,20 @@ public class BeddetailsController {
 
     @PostMapping("/updateBedDetails")
     @Operation(summary = "更新床位使用详情-只能修改床位使用结束时间")
-    public ResultVo updateBedDetails(Beddetails beddetails) throws Exception {
+    public ResultVo<Void> updateBedDetails(Beddetails beddetails) throws Exception {
         beddetailsService.updateById(beddetails);
         return ResultVo.ok("编辑成功");
     }
 
     @PostMapping("/exchangeBed")
     @Operation(summary = "床位调换")
-    public ResultVo exchangeBed(ExchangeDTO exchangeDTO) throws Exception {
+    public ResultVo<Void>  exchangeBed(ExchangeDTO exchangeDTO) throws Exception {
         return beddetailsService.exchangeBed(exchangeDTO);
     }
 
     @GetMapping("/delBedDetails")
     @Operation(summary = "删除记录")
-    public ResultVo delBedDetails(Integer id) throws Exception {
+    public ResultVo<Void>  delBedDetails(Integer id) throws Exception {
         beddetailsService.removeById(id);
         return ResultVo.ok("删除成功");
     }

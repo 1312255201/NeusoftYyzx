@@ -10,5 +10,5 @@ import cn.gugufish.yyzx.vo.BackdownVo;
 public interface BackdownService extends IService<Backdown> {
     ResultVo<Page<BackdownVo>> listBackdownVo(BackdownDTO backdownDTo) throws Exception;
 
-    ResultVo examineBackdown(Backdown backdown) throws Exception;
+    ResultVo<Void> examineBackdown(Backdown backdown) throws Exception;
 }

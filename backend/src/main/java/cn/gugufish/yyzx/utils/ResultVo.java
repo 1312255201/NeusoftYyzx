@@ -2,7 +2,7 @@ package cn.gugufish.yyzx.utils;
 
 /**
  * 响应实体类封装，Rest风格
- * @param code 状态码
+ * @param flag 请求是否成功
  * @param data 响应数据
  * @param message 其他消息
  * @param <T> 响应数据类型

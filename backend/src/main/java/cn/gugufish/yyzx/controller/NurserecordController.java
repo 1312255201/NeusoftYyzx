@@ -1,5 +1,6 @@
 package cn.gugufish.yyzx.controller;
 
+import cn.gugufish.yyzx.vo.OutwardVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.gugufish.yyzx.dto.NurseRecordDTO;
 import cn.gugufish.yyzx.dto.OutwardDTO;
@@ -27,7 +28,7 @@ public class NurserecordController {
 
     @Operation(summary = "添加护理记录")
     @PostMapping("/addNurseRecord")
-    public ResultVo addNurseRecord(@RequestBody Nurserecord nurserecord) throws Exception {
+    public ResultVo<Void> addNurseRecord(@RequestBody Nurserecord nurserecord) throws Exception {
         return nurserecordService.addNurseRecord(nurserecord);
     }
 
@@ -39,7 +40,7 @@ public class NurserecordController {
 
     @Operation(summary = "软删除护理记录")
     @GetMapping("/softDeleteCustomerRecord")
-    public ResultVo softDeleteCustomerRecord(@RequestParam Integer id) {
+    public ResultVo<Void> softDeleteCustomerRecord(@RequestParam Integer id) {
         Nurserecord nurseRecord = new Nurserecord();
         nurseRecord.setIsDeleted(1);
         nurseRecord.setId(id);
@@ -49,7 +50,7 @@ public class NurserecordController {
 
     @Operation(summary = "查询外出记录")
     @PostMapping("/queryOutwardVo")
-    public ResultVo queryOutwardVo(@RequestBody OutwardDTO outwardDTO) throws Exception {
+    public ResultVo<Page<OutwardVo>> queryOutwardVo(@RequestBody OutwardDTO outwardDTO) throws Exception {
         return outwardService.queryOutwardVo(outwardDTO);
     }
 }

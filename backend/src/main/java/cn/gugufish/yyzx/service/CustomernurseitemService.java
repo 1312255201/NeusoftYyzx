@@ -10,9 +10,9 @@ import cn.gugufish.yyzx.vo.CustomerNurseItemVo;
 import java.util.List;
 
 public interface CustomernurseitemService extends IService<Customernurseitem> {
-    ResultVo addItemToCustomer(Integer customerId, List<Customernurseitem> customernurseitems) throws Exception;
+    ResultVo<Void>  addItemToCustomer(Integer customerId, List<Customernurseitem> customernurseitems) throws Exception;
 
-    ResultVo removeCustomerLevelAndItem(Integer levelId, Integer customerId) throws Exception;
+    ResultVo<Void>  removeCustomerLevelAndItem(Integer levelId, Integer customerId) throws Exception;
 
     ResultVo<Page<CustomerNurseItemVo>> listCustomerItem(CustomerNurseItemDTO customerNurseItemDTO) throws Exception;
 }

@@ -26,8 +26,7 @@ public class BackdownServiceImpl extends ServiceImpl<BackdownMapper, Backdown> i
     }
 
     @Override
-    public ResultVo
-    examineBackdown(Backdown backdown) throws Exception {
+    public ResultVo<Void> examineBackdown(Backdown backdown) throws Exception {
         UpdateWrapper<Backdown> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", backdown.getId());
         updateWrapper.set("auditstatus", backdown.getAuditstatus());

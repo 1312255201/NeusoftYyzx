@@ -39,7 +39,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo addCustomer(Customer customer) throws Exception {
+    public ResultVo<Void>  addCustomer(Customer customer) throws Exception {
         // 校验身份证号
         if (Objects.isNull(customer.getIdcard()) || customer.getIdcard().trim().isEmpty()) {
             return ResultVo.fail("身份证号不能为空");
@@ -98,7 +98,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo removeCustomer(Integer id, Integer bedId) throws Exception {
+    public ResultVo<Void>  removeCustomer(Integer id, Integer bedId) throws Exception {
         // 1. 标记客户为删除
         Customer customer = new Customer();
         customer.setId(id);
@@ -129,7 +129,7 @@ public class CustomerServiceImpl extends ServiceImpl<CustomerMapper, Customer> i
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo editCustomer(Customer customer) throws Exception {
+    public ResultVo<Void>  editCustomer(Customer customer) throws Exception {
         // 更新客户信息
         int row1 = customerMapper.updateById(customer);
         // 若合同到期时间变更，同步更新床位详情

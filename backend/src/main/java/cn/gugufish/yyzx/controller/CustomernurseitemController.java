@@ -27,7 +27,7 @@ public class CustomernurseitemController {
 
     @Operation(summary = "为顾客单个/批量添加护理项目")
     @PostMapping("/addItemToCustomer/{customerId}")
-    public ResultVo addItemToCustomer(@PathVariable Integer customerId, @RequestBody List<Customernurseitem> customernurseitems) throws Exception {
+    public ResultVo<Void>  addItemToCustomer(@PathVariable Integer customerId, @RequestBody List<Customernurseitem> customernurseitems) throws Exception {
         return customernurseitemService.addItemToCustomer(customerId, customernurseitems);
     }
 
@@ -37,7 +37,7 @@ public class CustomernurseitemController {
             @Parameter(name = "levelId", description = "护理级别编号", required = true),
             @Parameter(name = "customerId", description = "用户编号", required = true)
     })
-    public ResultVo removeCustomerLevelAndItem(Integer levelId, Integer customerId) throws Exception {
+    public ResultVo<Void>  removeCustomerLevelAndItem(Integer levelId, Integer customerId) throws Exception {
         return customernurseitemService.removeCustomerLevelAndItem(levelId, customerId);
     }
 
@@ -49,7 +49,7 @@ public class CustomernurseitemController {
 
     @Operation(summary = "客户续费")
     @PostMapping("/updateNurseItem")
-    public ResultVo updateNurseItem(Customernurseitem Customernurseitem) throws Exception {
+    public ResultVo<Void>  updateNurseItem(Customernurseitem Customernurseitem) throws Exception {
         customernurseitemService.updateById(Customernurseitem);
         return ResultVo.ok("续费成功");
     }
@@ -60,8 +60,8 @@ public class CustomernurseitemController {
             @Parameter(name = "customerId", description = "用户编号", required = true),
             @Parameter(name = "itemId", description = "护理项目编号", required = true)
     })
-    public ResultVo isIncludesItemCustomer(Integer customerId, Integer itemId) throws Exception {
-        QueryWrapper qw = new QueryWrapper();
+    public ResultVo<Void>  isIncludesItemCustomer(Integer customerId, Integer itemId) throws Exception {
+        QueryWrapper<Customernurseitem> qw = new QueryWrapper<>();
         qw.eq("item_id", itemId);
         qw.eq("customer_id", customerId);
         qw.eq("is_deleted", 0);
@@ -78,7 +78,7 @@ public class CustomernurseitemController {
     @Parameters({
             @Parameter(name = "id", description = "主键key", required = true)
     })
-    public ResultVo removeCustomerItem(Integer id) throws Exception {
+    public ResultVo<Void> removeCustomerItem(Integer id) throws Exception {
         Customernurseitem customernurseitem = new Customernurseitem();
         customernurseitem.setIsDeleted(1);
         customernurseitem.setId(id);

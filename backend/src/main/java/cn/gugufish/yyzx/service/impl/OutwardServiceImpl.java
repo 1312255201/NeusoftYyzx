@@ -21,7 +21,7 @@ public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo examineOutward(Outward outward) throws Exception {
+    public ResultVo<Void> examineOutward(Outward outward) throws Exception {
         UpdateWrapper<Outward> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", outward.getId());
         updateWrapper.set("auditstatus", outward.getAuditstatus());

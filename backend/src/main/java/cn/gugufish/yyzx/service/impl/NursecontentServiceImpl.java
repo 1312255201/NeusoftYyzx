@@ -1,5 +1,6 @@
 package cn.gugufish.yyzx.service.impl;
 
+import cn.gugufish.yyzx.pojo.Nurselevelitem;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.gugufish.yyzx.mapper.NursecontentMapper;
@@ -63,16 +64,16 @@ public class NursecontentServiceImpl extends ServiceImpl<NursecontentMapper, Nur
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ResultVo delNurseItem(Integer id) throws Exception {
+    public ResultVo<Void> delNurseItem(Integer id) throws Exception {
         Nursecontent nursecontent = new Nursecontent();
         nursecontent.setIsDeleted(1);
         nursecontent.setId(id);
         //查询当前护理项目是否在护理级别护理项目列表中，如果在就需要进行剔除
-        QueryWrapper qwCount = new QueryWrapper();
+        QueryWrapper<Nurselevelitem> qwCount = new QueryWrapper<>();
         qwCount.eq("item_id", id);
         long count = nurselevelitemMapper.selectCount(qwCount);
         if (count > 0) {
-            QueryWrapper qw = new QueryWrapper();
+            QueryWrapper<Nurselevelitem> qw = new QueryWrapper<>();
             qw.eq("item_id", id);
             int row = nurselevelitemMapper.delete(qw);
             //更新逻辑删除标志为“1”隐藏

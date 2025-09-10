@@ -23,21 +23,21 @@ public class CustomerpreferenceController {
 
     @PostMapping("/addCustomerpreference")
     @Operation(summary = "为顾客单个添加喜好")
-    public ResultVo addCustomerpreference(@RequestBody Customerpreference customerpreference) throws Exception {
+    public ResultVo<Void>  addCustomerpreference(@RequestBody Customerpreference customerpreference) throws Exception {
         customerpreferenceService.save(customerpreference);
         return ResultVo.ok("添加顾客喜好");
     }
 
     @Operation(summary = "更新顾客喜好")
     @PostMapping("/updateCustomerpreference")
-    public ResultVo updateCustomerpreference(@RequestBody Customerpreference customerpreference) throws Exception {
+    public ResultVo<Void>  updateCustomerpreference(@RequestBody Customerpreference customerpreference) throws Exception {
         customerpreferenceService.updateById(customerpreference);
         return ResultVo.ok("更新顾客喜好");
     }
 
     @Operation(summary = "删除顾客喜好")
     @GetMapping("/removeCustomerpreference")
-    public ResultVo removeCustomerpreference(Integer id) throws Exception {
+    public ResultVo<Void>  removeCustomerpreference(Integer id) throws Exception {
         customerpreferenceService.removeById(id);
         return ResultVo.ok("删除顾客喜好");
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface NursecontentService extends IService<Nursecontent> {
     List<Nursecontent> listNurseItemByLevel(Integer levelId) throws Exception;
 
-    ResultVo updateNurseItem(Nursecontent nursecontent) throws Exception;
+    ResultVo<Void> updateNurseItem(Nursecontent nursecontent) throws Exception;
 
-    ResultVo delNurseItem(Integer id) throws Exception;
+    ResultVo<Void> delNurseItem(Integer id) throws Exception;
 }

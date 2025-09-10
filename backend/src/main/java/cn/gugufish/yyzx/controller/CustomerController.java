@@ -22,7 +22,7 @@ public class CustomerController {
 
     @Operation(summary = "入住登记")
     @PostMapping("/rzdj")
-    public ResultVo addCustomer(Customer customer) throws Exception {
+    public ResultVo<Void>  addCustomer(Customer customer) throws Exception {
         return customerService.addCustomer(customer);
     }
 
@@ -34,13 +34,13 @@ public class CustomerController {
 
     @Operation(summary = "根据key删除")
     @GetMapping("/remove")
-    public ResultVo remove(Integer id, Integer bedId) throws Exception {
+    public ResultVo<Void>  remove(Integer id, Integer bedId) throws Exception {
         return customerService.removeCustomer(id, bedId);
     }
 
     @Operation(summary = "编辑客户信息")
     @PostMapping("/editKhxx")
-    public ResultVo editKhxx(Customer customer) throws Exception {
+    public ResultVo<Void>  editKhxx(Customer customer) throws Exception {
         return customerService.editCustomer(customer);
     }
 }

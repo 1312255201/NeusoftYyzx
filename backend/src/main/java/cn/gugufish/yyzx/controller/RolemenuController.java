@@ -1,9 +1,0 @@
-package cn.gugufish.yyzx.controller;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("/rolemenu")
-public class RolemenuController {
-}
