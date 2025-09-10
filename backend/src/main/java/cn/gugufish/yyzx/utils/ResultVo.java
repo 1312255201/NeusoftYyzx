@@ -2,9 +2,7 @@ package cn.gugufish.yyzx.utils;
 
 import lombok.Data;
 
-/**
- * @author: wudagai
- */
+
 @Data
 public class ResultVo<T> {
     private boolean flag;

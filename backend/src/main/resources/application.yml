@@ -1,0 +1,17 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /yyzx
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/yyzx
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: cn.gugufish.yyzx.pojo,cn.gugufish.yyzx.vo,cn.gugufish.yyzx.dto
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
