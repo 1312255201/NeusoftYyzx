@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,8 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "用户管理")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    @Resource
+    UserService userService;
 
     @Operation(summary = "用户登录接口")
     @Parameters({

@@ -39,9 +39,8 @@ public class BeddetailsServiceImpl extends ServiceImpl<BeddetailsMapper, Beddeta
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo exchangeBed(ExchangeDTO exchangeDTO) throws Exception {
+    public ResultVo<Void> exchangeBed(ExchangeDTO exchangeDTO) throws Exception {
         //查询床位是否可用
-        QueryWrapper qw = new QueryWrapper();
         Bed bed = bedMapper.selectById(exchangeDTO.getNewBedId());
         if (bed.getBedStatus() != 1) {
             return ResultVo.fail("该床位已有人");

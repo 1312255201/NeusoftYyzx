@@ -21,7 +21,7 @@ import java.util.List;
 public class BedController {
 
     @Resource
-    private BedService bedService;
+    BedService bedService;
 
     @GetMapping("/findBed")
     @Operation(summary = "查询床位信息")

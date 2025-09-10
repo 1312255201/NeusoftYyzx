@@ -43,13 +43,13 @@ public class OutwardController {
 
     @Operation(summary = "审批外出申请")
     @PostMapping("/examineOutward")
-    public ResultVo examineOutward(Outward outward) throws Exception {
+    public ResultVo<Void> examineOutward(Outward outward) throws Exception {
         return outwardService.examineOutward(outward);
     }
 
     @Operation(summary = "撒回外出申请")
     @PostMapping("/delOutward")
-    public ResultVo delOutward(Integer id) throws Exception {
+    public ResultVo<Void> delOutward(Integer id) throws Exception {
         UpdateWrapper<Outward> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", id);
         updateWrapper.set("is_deleted", 1);

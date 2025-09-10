@@ -11,6 +11,7 @@ import cn.gugufish.yyzx.service.NurselevelitemService;
 import cn.gugufish.yyzx.utils.ResultVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +22,14 @@ import java.util.List;
 @Tag(name = "护理级别管理")
 @CrossOrigin
 public class NurselevelController {
-    @Autowired
-    private NurselevelService nurselevelService;
+    @Resource
+    NurselevelService nurselevelService;
 
-    @Autowired
-    private NurselevelitemService nurselevelitemService;
+    @Resource
+    NurselevelitemService nurselevelitemService;
 
-    @Autowired
-    private NursecontentService nursecontentService;
+    @Resource
+    NursecontentService nursecontentService;
 
     @Operation(summary = "添加护理级别")
     @PostMapping("/addNurseLevel")

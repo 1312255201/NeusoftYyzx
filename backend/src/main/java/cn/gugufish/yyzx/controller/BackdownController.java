@@ -23,13 +23,13 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "退住管理")
 public class BackdownController {
     @Resource
-    private BackdownService backdownService;
+    BackdownService backdownService;
 
     @Resource
-    private BedService bedService;
+    BedService bedService;
 
     @Resource
-    private CustomerService customerService;
+    CustomerService customerService;
 
     @Operation(summary = "查询退住信息")
     @PostMapping("/listBackdown")
