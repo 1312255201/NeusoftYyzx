@@ -4,6 +4,7 @@ import cn.gugufish.yyzx.interceptor.CheckTokenInterceptor;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -33,7 +34,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/images/**") // 排除静态资源
                 .excludePathPatterns("/swagger-ui/**", "/v3/api-docs/**"); // 排除Swagger相关路径
     }
-
     /**
      * 配置数据格式化规则
      *

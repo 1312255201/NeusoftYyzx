@@ -1,6 +1,8 @@
 package cn.gugufish.yyzx.utils;
 
 /**
+ *
+ *
  * 响应实体类封装，Rest风格
  * @param flag 请求是否成功
  * @param data 响应数据
@@ -9,19 +11,11 @@ package cn.gugufish.yyzx.utils;
  */
 public record ResultVo<T> (boolean flag, T data, String message) {
 
-    /**
-     * 成功不添加data
-     *
-     * @return
-     */
+
     public static <T> ResultVo<T> ok(String message){
         return new ResultVo<>(true, null, message);
     }
-    /**
-     * 成功添加data
-     *
-     * @return
-     */
+
     public static <T> ResultVo<T> ok(T data){
         return new ResultVo<>(true, data, "");
     }
