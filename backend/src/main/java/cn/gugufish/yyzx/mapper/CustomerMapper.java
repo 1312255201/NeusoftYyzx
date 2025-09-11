@@ -45,16 +45,16 @@ public interface CustomerMapper extends BaseMapper<Customer> {
             "LEFT JOIN bed b ON (c.bed_id = b.id) " +
             "<where>" +
             "<if test='manType!=null and manType==1'>" +
-            "and (select count(1) from customernurseitem cni where cni.customer_id=c.id and cni.is_deleted=0)=0 " +
+            "and (select count(1) from customernurseitem cni where cni.customer_id = c.id and cni.is_deleted = 0) = 0 " +
             "</if>" +
             "<if test='manType!=null and manType==2'>" +
-            "and (select count(1) from customernurseitem cni where cni.customer_id=c.id and cni.is_deleted=0)>0 " +
+            "and (select count(1) from customernurseitem cni where cni.customer_id = c.id and cni.is_deleted = 0 ) > 0 " +
             "</if>" +
             "<if test='customerName!=null and customerName!=\"\"'>" +
             "and customer_name like concat('%', #{customerName}, '%')" +
             "</if>" +
             "<if test='manType!=null and manType==3'>" +
-            "and user_id =-1" +
+            "and user_id = -1 " +
             "</if>" +
             "<if test='userId!=null'>" +
             "and user_id =#{userId} " +

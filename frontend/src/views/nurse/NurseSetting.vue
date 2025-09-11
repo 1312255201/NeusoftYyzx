@@ -466,12 +466,30 @@
 					return;
 				}
 
+				console.log('开始获取护理项目，levelId:', levelId);
+
 				listNurseItemByLevel({
 					levelId: levelId
 				}).then(res => {
-					// 从正确的位置提取数据 - 后端数据在 res.data.data 中
-					let data = res.data || {};
-					let newArr = Array.isArray(data.data) ? data.data : [];
+					console.log('护理项目API响应:', res);
+					
+					// 检查响应结构并提取数据
+					let data = res.data || res || {};
+					let newArr = [];
+					
+					// 尝试多种可能的数据结构
+					if (Array.isArray(data.data)) {
+						newArr = data.data;
+					} else if (Array.isArray(data.records)) {
+						newArr = data.records;
+					} else if (Array.isArray(data)) {
+						newArr = data;
+					} else {
+						console.warn('未找到有效的护理项目数据:', data);
+						newArr = [];
+					}
+
+					console.log('提取到的护理项目数据:', newArr);
 
 					for (let i = 0; i < newArr.length; i++) {
 						const item = newArr[i] || {};
@@ -486,6 +504,8 @@
 						item.maturityTime = this.formatDate(maturityDate);
 						newArr[i] = item;
 					}
+					
+					console.log('处理后的护理项目数据:', newArr);
 					this.drawer.isInLevelItemList = newArr;
 				}).catch(error => {
 					console.error('获取护理项目失败:', error);

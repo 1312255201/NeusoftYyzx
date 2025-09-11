@@ -28,6 +28,7 @@ public class NursecontentServiceImpl extends ServiceImpl<NursecontentMapper, Nur
         QueryWrapper qw = new QueryWrapper<>();
         qw.eq("level_id", levelId);
         qw.select("item_id");
+
         List<Integer> itemIds = nurselevelitemMapper.selectObjs(qw);
         List<Nursecontent> nursecontents = new ArrayList<>();
         //判断是否有记录
