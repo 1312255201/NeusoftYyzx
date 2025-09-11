@@ -57,9 +57,9 @@ public interface CustomerMapper extends BaseMapper<Customer> {
             "and user_id =-1" +
             "</if>" +
             "<if test='userId!=null'>" +
-            "and user_id =#{userId}" +
+            "and user_id =#{userId} " +
             "</if>" +
-            "and c.is_deleted=0" +
+            "and c.is_deleted=0 " +
             "</where>" +
             "order by c.id desc" +
             "</script>")

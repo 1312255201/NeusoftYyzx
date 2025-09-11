@@ -32,7 +32,6 @@ public class OutwardController {
     public ResultVo<Void> addOutward(@RequestBody Outward outward) throws Exception {
         // 设置预期返回时间
         if (outward.getExpectedreturntime() == null) {
-            // 使用 java.util.Date 类型，而不是 LocalDateTime
             java.util.Date tomorrow = new java.util.Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
             outward.setExpectedreturntime(tomorrow);
         }
@@ -58,7 +57,7 @@ public class OutwardController {
 
     @Operation(summary = "登记回院时间")
     @PostMapping("/updateBackTime")
-    public ResultVo updateBackTime(Outward outward) throws Exception {
+    public ResultVo<Object> updateBackTime(Outward outward) throws Exception {
         UpdateWrapper<Outward> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", outward.getId());
         updateWrapper.set("actual_return_time", outward.getActualreturntime());
