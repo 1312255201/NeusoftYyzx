@@ -36,23 +36,28 @@ public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> impl
             return ResultVo.fail("查询参数不能为空");
         }
 
-        // 2. 处理分页参数，设置默认值
+        // 2. 处理分页参数
+        Integer pageNum = outwardDTO.getPageNum();
+        if (pageNum == null || pageNum <= 0) {
+            pageNum = 1; // 设置默认页码
+        }
+        
         Integer pageSize = outwardDTO.getPageSize();
         if (pageSize == null || pageSize <= 0) {
             pageSize = 10; // 设置默认分页大小
         }
 
         // 3. 处理userId参数
-        Integer userId = outwardDTO.getUserId();
-        if (userId == null) {
-            return ResultVo.fail("用户编号不能为空");
+        Integer customerId= outwardDTO.getCustomerId();
+        if (customerId == null) {
+            return ResultVo.fail("客户编号不能为空");
         }
 
         // 4. 创建分页对象
-        Page<OutwardVo> page = new Page<>(1, pageSize); // 默认为第一页
+        Page<OutwardVo> page = new Page<>(pageNum, pageSize);
 
         // 5. 调用Mapper方法
-        outwardMapper.selectOutwardVo(page, userId);
+        outwardMapper.selectOutwardVo(page, customerId);
 
         return ResultVo.ok(page);
     }

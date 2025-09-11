@@ -80,27 +80,44 @@
 								<el-table-column align="center" :index="indexMethodRecord" type="index" label="序号"
 									width="40" />
 								<el-table-column align="center" prop="customerName" label="客户名称" width="100" />
-								<el-table-column align="center" prop="outgoingreason" label="外出事由" width="100" />
-								<el-table-column align="center" prop="outgoingtime" label="外出时间" width="70" />
-								<el-table-column align="center" prop="expectedreturntime" label="预计回院时间" width="100" />
-								<el-table-column align="center" prop="actualreturntime" label="实际回院时间" width="100" />
+								<el-table-column align="center" prop="outgoingReason" label="外出事由" width="100" />
+								<el-table-column align="center" prop="outgoingTime" label="外出时间" width="70">
+									<template #default="{row}">
+										{{ row.outgoingTime ? new Date(row.outgoingTime).toLocaleDateString('zh-CN') : '' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="expectedreTurntime" label="预计回院时间" width="100">
+									<template #default="{row}">
+										{{ row.expectedreTurntime ? new Date(row.expectedreTurntime).toLocaleDateString('zh-CN') : '' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="actualreTurntime" label="实际回院时间" width="100">
+									<template #default="{row}">
+										{{ row.actualreTurntime ? new Date(row.actualreTurntime).toLocaleDateString('zh-CN') : '' }}
+									</template>
+								</el-table-column>
 								<el-table-column align="center" prop="escorted" label="陪同人" width="100" />
 								<el-table-column align="center" prop="relation" label="与老人关系" width="100" />
-								<el-table-column align="center" prop="escortedtel" label="陪同人电话" width="100" />
-								<el-table-column align="center" prop="auditstatus" label="审批状态" width="100">
+								<el-table-column align="center" prop="escortedTel" label="陪同人电话" width="100" />
+								<el-table-column align="center" prop="auditTime" label="审批时间" width="100">
 									<template #default="{row}">
-										{{ row.auditstatus === 0 ? '已提交' : row.auditstatus === 1 ? '同意' : '拒绝' }}
+										{{ row.auditTime ? new Date(row.auditTime).toLocaleDateString('zh-CN') : '' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="auditStatus" label="审批状态" width="100">
+									<template #default="{row}">
+										{{ row.auditStatus === 0 ? '待审批' : row.auditStatus === 1 ? '已通过' : row.auditstatus === 2 ? '已拒绝' : '未知状态' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" label="操作" width="100">
 									<template #default="scope">
-										<el-button v-if="scope.row.auditstatus === 1 && dialog.item.roleId === 2"
+										<el-button v-if="scope.row.auditStatus === 1 && dialog.item.roleId === 2"
 											:disabled="scope.row.actualreturntime" type="success" size="small" round
 											plain @click="updateTime(scope.row.id)">登记回院时间</el-button>
-										<el-button v-if="scope.row.auditstatus === 0 && dialog.item.roleId === 2"
+										<el-button v-if="scope.row.auditStatus === 0 && dialog.item.roleId === 2"
 											type="danger" size="small" round plain
 											@click="del(scope.row.id)">撤销申请</el-button>
-										<el-button v-if="scope.row.auditstatus === 0 && dialog.item.roleId !== 2"
+										<el-button v-if="scope.row.auditStatus === 0 && dialog.item.roleId !== 2"
 											type="primary" size="small" round plain
 											@click="examine(scope.row.id)">审批</el-button>
 									</template>

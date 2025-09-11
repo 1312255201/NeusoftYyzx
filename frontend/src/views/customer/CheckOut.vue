@@ -82,28 +82,28 @@
 								<el-table-column align="center" prop="customerName" label="客户名称" width="100" />
 								<el-table-column align="center" prop="checkinDate" label="入住时间" width="100">
 									<template #default="{row}">
-										{{ row.checkinDate ? new Date(row.checkinDate).toLocaleDateString() : '' }}
+										{{ row.checkinDate ? new Date(row.checkinDate).toLocaleDateString('zh-CN') : '' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="retreatTime" label="退住时间" width="100">
 									<template #default="{row}">
-										{{ row.retreatTime ? new Date(row.retreatTime).toLocaleDateString() : '' }}
+										{{ row.retreatTime ? new Date(row.retreatTime).toLocaleDateString('zh-CN') : '' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="retreatType" label="退住类型" width="100">
 									<template #default="{row}">
-										{{ row.retreatType === 0 ? '正常退住' : row.retreatType === 1 ? '死亡退住' : '保留床位' }}
+										{{ row.retreatType === 0 ? '正常退住' : row.retreatType === 1 ? '死亡退住' : row.retreatType === 2 ? '保留床位' : '未知类型' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="retreatReason" label="退住原因" width="100" />
 								<el-table-column align="center" prop="auditTime" label="审批时间" width="100">
 									<template #default="{row}">
-										{{ row.auditTime ? new Date(row.auditTime).toLocaleDateString() : '' }}
+										{{ row.auditTime ? new Date(row.auditTime).toLocaleDateString('zh-CN') : '' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="auditStatus" label="审批状态" width="100">
 									<template #default="{row}">
-										{{ row.auditStatus === 0 ? '已提交' : row.auditStatus === 1 ? '同意' : '拒绝' }}
+										{{ row.auditStatus === 0 ? '待审批' : row.auditStatus === 1 ? '已通过' : row.auditStatus === 2 ? '已拒绝' : '未知状态' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="bedDetails" label="床位" width="100" />
