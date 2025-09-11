@@ -320,12 +320,13 @@
 					};
 				});
 			},
-			handleClose() {
+			handleClose(done) {
 				this.dialog.dialogVisible = false;
 				this.resetForm("itemForm");
+				if (done) done();
 			},
 			cancel() {
-				this.handleClose();
+				this.handleClose(() => {});
 			},
 			resetForm(formName) {
 				if (this.$refs[formName]) {

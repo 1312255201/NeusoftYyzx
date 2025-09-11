@@ -349,13 +349,14 @@
 			},
 
 			// 关闭模态框
-			handleClose() {
+			handleClose(done) {
 				this.dialog.dialogVisible = false;
 				this.resetForm("itemForm"); // 重置表单
+				if (done) done();
 			},
 
 			cancel() {
-				this.handleClose();
+				this.handleClose(() => {});
 			},
 
 			// 重置表单

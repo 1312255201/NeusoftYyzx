@@ -240,9 +240,10 @@
 			},
 
 			// 关闭模态框
-			handleClose() {
+			handleClose(done) {
 				this.dialog.dialogVisible = false;
 				this.resetForm("levelForm"); // 重置表单
+				if (done) done();
 			},
 
 			// 重置表单
@@ -253,7 +254,7 @@
 			},
 
 			cancel() {
-				this.handleClose();
+				this.handleClose(() => {});
 			},
 
 			// 点击添加

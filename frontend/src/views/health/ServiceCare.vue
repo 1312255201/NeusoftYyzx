@@ -325,9 +325,10 @@
 				}
 			},
 			// 关闭模态框
-			handleClose() {
+			handleClose(done) {
 				this.dialog.dialogVisible = false;
 				this.resetForm("customerItemForm");
+				if (done) done();
 			},
 			// 重置表单
 			resetForm(formName) {
@@ -336,7 +337,7 @@
 				}
 			},
 			cancel() {
-				this.handleClose();
+				this.handleClose(() => {});
 			},
 			// 点击续费
 			enew(row) {

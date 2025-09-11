@@ -181,7 +181,7 @@
 
 		<!-- 添加外出申请对话框 -->
 		<el-dialog v-model="dialog.dialogVisible" :title="dialog.tops" width="40%" align-center draggable
-			before-close="handleClose">
+			:before-close="handleClose">
 			<el-divider border-style="double" style="margin:0;" />
 			<el-form label-position="right" label-width="auto" style="max-width:380px;margin:20px auto"
 				class="demo-form-inline" ref="itemForm" :model="dialog.item" :rules="rules">
@@ -486,14 +486,15 @@
 			},
 
 			// 关闭添加对话框
-			handleClose() {
+			handleClose(done) {
 				this.dialog.dialogVisible = false;
 				this.resetForm("itemForm"); // 重置表单
+				if (done) done();
 			},
 
 			// 取消添加
 			cancel() {
-				this.handleClose();
+				this.handleClose(() => {});
 			},
 
 			// 重置表单
