@@ -47,14 +47,17 @@ public class UserController {
         Page<User> page = new Page<>(currentPage, size);
 
         QueryWrapper<User> qw = new QueryWrapper<>();
-        // 按真实姓名模糊查询
+        
+        // 按姓名模糊查询（如果传递了nickname）
         if (userDTO.getNickname() != null && !userDTO.getNickname().isEmpty()) {
             qw.like("nickname", "%" + userDTO.getNickname() + "%");
         }
+        
         // 按角色精确查询（如果传递了roleId）
         if (userDTO.getRoleId() != null) {
             qw.eq("role_id", userDTO.getRoleId());
         }
+        
         // 只查询未删除的用户（状态正常）
         qw.eq("is_deleted", 0);
 
