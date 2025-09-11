@@ -1,6 +1,7 @@
 package cn.gugufish.yyzx.filter;
 
 import cn.gugufish.yyzx.pojo.User;
+import cn.gugufish.yyzx.service.UserService;
 import cn.gugufish.yyzx.utils.Const;
 import cn.gugufish.yyzx.utils.IpUtils;
 import cn.gugufish.yyzx.utils.SnowflakeIdGenerator;
@@ -50,7 +51,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
      * - /v3/api-docs: OpenAPI文档接口
      * - /images: 图片静态资源
      */
-    private final Set<String> ignores = Set.of("/swagger-ui", "/v3/api-docs", "/images");
+    private final Set<String> ignores = Set.of("/swagger-ui", "/v3/api-docs");
 
     /**
      * 核心过滤方法
@@ -137,10 +138,17 @@ public class RequestLogFilter extends OncePerRequestFilter {
         // 提取并格式化请求参数
         JSONObject object = new JSONObject();
         request.getParameterMap().forEach((k, v) -> object.put(k, v.length > 0 ? v[0] : null));
-        
-        // 获取当前用户ID（如果已认证）
-        log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 身份: 未知 | 请求参数列表: {}",
-                request.getServletPath(), request.getMethod(), IpUtils.getRealClientIp(request), object);
+        String userName = (String)request.getAttribute(Const.ATTR_USER_NAME);
+
+        if(userName != null) {
+            log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 身份: {} | 请求参数列表: {}",
+                    request.getServletPath(), request.getMethod(), IpUtils.getRealClientIp(request),
+                    userName, object);
+        } else {
+            // 未认证用户：记录基础请求信息
+            log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 身份: 未验证 | 请求参数列表: {}",
+                    request.getServletPath(), request.getMethod(), IpUtils.getRealClientIp(request), object);
+        }
         //TODO : 整体代码修复添加新IP工具类， 用来适配部署服务器后Nginx反代导致IP错误的问题，本工具类没有测试临时添加TODO
     }
 }

@@ -1,5 +1,6 @@
 package cn.gugufish.yyzx.interceptor;
 
+import cn.gugufish.yyzx.utils.Const;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
@@ -7,12 +8,13 @@ import io.jsonwebtoken.Jwts;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.crypto.SecretKey;
 
-
+@Slf4j
 @Component
 public class CheckTokenInterceptor implements HandlerInterceptor {
     
@@ -42,7 +44,11 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             JwtParser parser = Jwts.parserBuilder().setSigningKey(jwtSecretKey).build();
             //如果token正确，则正常执行，否则抛出异常
             Jws<Claims> claimsJws = parser.parseClaimsJws(token);
+            log.info(token);
+            request.setAttribute(Const.ATTR_USER_NAME, claimsJws.getBody().getSubject());
+            log.info("token校验成功");
+            log.info(claimsJws.getBody().getSubject());
+            return true;
         }
-        return true;
     }
 }

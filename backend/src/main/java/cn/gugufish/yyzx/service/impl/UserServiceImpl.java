@@ -11,9 +11,10 @@ import cn.gugufish.yyzx.service.UserService;
 import cn.gugufish.yyzx.utils.ResultVo;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.crypto.SecretKey;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private RolemenuMapper rolemenuMapper;
@@ -64,6 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                         .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))//设置过期时间
                         .signWith(jwtSecretKey)//使用配置的安全密钥
                         .compact();
+                log.info(token);
                 return ResultVo.ok(user, token);
             }
             return ResultVo.fail("无权限，请联系管理员");
