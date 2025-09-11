@@ -11,6 +11,7 @@ import cn.gugufish.yyzx.utils.ResultVo;
 import cn.gugufish.yyzx.vo.NurseRecordsVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +21,10 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "护理记录管理")
 public class NurserecordController {
 
-    @Autowired
+    @Resource
     private NurserecordService nurserecordService;
 
-    @Autowired
+    @Resource
     private OutwardService outwardService;
 
     @Operation(summary = "添加护理记录")

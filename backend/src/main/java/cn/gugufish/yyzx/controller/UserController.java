@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.gugufish.yyzx.dto.UserDTO;
 import cn.gugufish.yyzx.pojo.User;
 import cn.gugufish.yyzx.service.UserService;
+import cn.gugufish.yyzx.utils.RedisTokenBlacklistUtil;
 import cn.gugufish.yyzx.utils.ResultVo;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -25,6 +26,9 @@ public class UserController {
 
     @Resource
     UserService userService;
+    
+    @Resource
+    RedisTokenBlacklistUtil redisTokenBlacklistUtil;
 
     @Operation(summary = "用户登录接口")
     @Parameters({
@@ -35,6 +39,22 @@ public class UserController {
     @GetMapping("/login")
     public ResultVo<User> login(String username, String password) throws Exception {
         return userService.login(username, password);
+    }
+    
+    @Operation(summary = "用户退出登录接口")
+    @PostMapping("/logout")
+    public ResultVo<Void> logout(@RequestHeader("token") String token) {
+        try {
+            // 将token添加到Redis黑名单
+            boolean success = redisTokenBlacklistUtil.addToBlacklist(token);
+            if (success) {
+                return ResultVo.ok("退出登录成功");
+            } else {
+                return ResultVo.fail("退出登录失败");
+            }
+        } catch (Exception e) {
+            return ResultVo.fail("退出登录异常: " + e.getMessage());
+        }
     }
 
     // 支持按角色(roleId)和真实姓名(nickname)联合查询

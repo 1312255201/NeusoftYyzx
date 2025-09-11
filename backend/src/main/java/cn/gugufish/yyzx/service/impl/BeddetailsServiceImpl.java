@@ -78,8 +78,8 @@ public class BeddetailsServiceImpl extends ServiceImpl<BeddetailsMapper, Beddeta
         customer.setRoomNo(exchangeDTO.getNewRoomNo());
         int row5 = customerMapper.updateById(customer);
         if (!(row1 > 0 && row2 > 0 && row3 > 0 && row4 > 0 && row5 > 0)) {
-            throw new Exception("床位调换成功");
+            throw new Exception("床位调换失败");
         }
-        return ResultVo.ok("床位调换失败");
+        return ResultVo.ok("床位调换成功");
     }
 }

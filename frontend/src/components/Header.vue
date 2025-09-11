@@ -21,6 +21,9 @@
 		getSessionStorage,
 		setSessionStorage
 	} from '@/utils/common.js'
+	import {
+		logout as logoutApi
+	} from '@/api/userApi.js'
 	export default {
 		name: "Header",
 		data() {
@@ -30,6 +33,32 @@
 		},
 		methods: {
 			logout() {
+				const token = sessionStorage.getItem('token')
+				
+				// 如果没有token，直接清空本地存储并跳转
+				if (!token || token === 'null') {
+					this.clearLocalStorage()
+					return
+				}
+				
+				// 调用后端logout接口
+				logoutApi(token).then(res => {
+					if (res.flag) {
+						this.$message.success(res.message)
+					} else {
+						this.$message.warning(res.message)
+					}
+					// 无论后端接口成功与否，都清空本地存储并跳转
+					this.clearLocalStorage()
+				}).catch(error => {
+					console.error('退出登录接口调用失败:', error)
+					this.$message.error('退出登录失败，但将清空本地登录信息')
+					// 即使接口调用失败，也要清空本地存储
+					this.clearLocalStorage()
+				})
+			},
+			
+			clearLocalStorage() {
 				sessionStorage.setItem('token', null)
 				setSessionStorage('user', null)
 				this.$store.commit('addMenus', [])

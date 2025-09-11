@@ -1,6 +1,7 @@
 package cn.gugufish.yyzx.filter;
 
 import cn.gugufish.yyzx.utils.Const;
+import cn.gugufish.yyzx.utils.RedisTokenBlacklistUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
@@ -44,6 +45,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      */
     @Resource
     private SecretKey jwtSecretKey;
+    
+    /**
+     * Redis Token黑名单工具类
+     */
+    @Resource
+    private RedisTokenBlacklistUtil redisTokenBlacklistUtil;
 
     /**
      * 需要忽略JWT验证的URL前缀集合
@@ -82,8 +89,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // 解析JWT token并设置用户信息
-        this.parseAndSetUserInfo(request);
-        
+        boolean success = this.parseAndSetUserInfo(request);
+        if (!success) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         // 继续执行后续过滤器
         filterChain.doFilter(request, response);
     }
@@ -109,11 +119,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * 
      * @param request HTTP请求对象
      */
-    private void parseAndSetUserInfo(HttpServletRequest request) {
+    private boolean parseAndSetUserInfo(HttpServletRequest request) {
         try {
             // 获取token
             String token = request.getHeader("token");
             if (token != null && !token.isEmpty()) {
+                // 检查token是否在黑名单中
+                if (redisTokenBlacklistUtil.isInBlacklist(token)) {
+                    log.debug("Token已在黑名单中，拒绝访问");
+                    return false;
+                }
+                
                 // 校验token的有效性
                 JwtParser parser = Jwts.parserBuilder().setSigningKey(jwtSecretKey).build();
                 Jws<Claims> claimsJws = parser.parseClaimsJws(token);
@@ -130,10 +146,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
                 
                 log.debug("JWT解析成功，用户ID: {}, 用户名: {}", userId, username);
+                return true;
             }
         } catch (Exception e) {
             // JWT解析失败时记录调试日志，但不阻断请求处理
             log.debug("JWT token解析失败: {}", e.getMessage());
+            return false;
         }
+        return false;
     }
 }

@@ -74,3 +74,17 @@ export function delUser(data) {
 		}
 	});
 }
+
+/**
+ * 用户退出登录接口
+ * @param {string} token - 用户的JWT token
+ * @returns {Promise} - 返回一个Promise对象，包含服务器响应数据
+ */
+export function logout(token) {
+	return http.post('/user/logout', {}, {
+		headers: {
+			'token': token,
+			'Content-Type': 'application/json'
+		}
+	});
+}

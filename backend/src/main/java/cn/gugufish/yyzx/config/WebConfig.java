@@ -1,5 +1,8 @@
 package cn.gugufish.yyzx.config;
 
+import cn.gugufish.yyzx.utils.DateConverter;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,6 +16,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Resource
+    private DateConverter dateConverter;
 
     /**
      * 配置拦截器注册
@@ -40,6 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(dateConverter);
         WebMvcConfigurer.super.addFormatters(registry);
     }
 }

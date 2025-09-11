@@ -1,6 +1,6 @@
 package cn.gugufish.yyzx.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,5 +30,6 @@ public class ExchangeDTO {
     private Integer oldBedId;
 
     @Schema(description = "床位使用结束时间")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX", timezone = "GMT+8")
     private Date endDate;
 }

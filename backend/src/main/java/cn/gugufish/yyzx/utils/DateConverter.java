@@ -22,6 +22,7 @@ public class DateConverter implements Converter<String, Date> {
         formarts.add("yyyy-MM-dd");
         formarts.add("yyyy-MM-dd hh:mm");
         formarts.add("yyyy-MM-dd hh:mm:ss");
+        formarts.add("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     }
 
     @Override
@@ -38,8 +39,10 @@ public class DateConverter implements Converter<String, Date> {
             return parseDate(source, formarts.get(2));
         } else if (source.matches("^\\d{4}-\\d{1,2}-\\d{1,2} {1}\\d{1,2}:\\d{1,2}:\\d{1,2}$")) {
             return parseDate(source, formarts.get(3));
+        } else if (source.matches("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}[+-]\\d{2}:\\d{2}$")) {
+            return parseDate(source, formarts.get(4));
         } else {
-            throw new IllegalArgumentException("Invalid boolean value '" + source + "'");
+            throw new IllegalArgumentException("Invalid date value '" + source + "'");
         }
     }
 
