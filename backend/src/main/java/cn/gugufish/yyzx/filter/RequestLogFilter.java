@@ -14,7 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
+
+import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
@@ -34,6 +35,7 @@ import java.util.Set;
  * @author GuguFish
  */
 @Slf4j
+@Order(2)
 @WebFilter(urlPatterns = "/*", filterName = "requestLogFilter")
 public class RequestLogFilter extends OncePerRequestFilter {
 
@@ -138,12 +140,12 @@ public class RequestLogFilter extends OncePerRequestFilter {
         // 提取并格式化请求参数
         JSONObject object = new JSONObject();
         request.getParameterMap().forEach((k, v) -> object.put(k, v.length > 0 ? v[0] : null));
-        String userName = (String)request.getAttribute(Const.ATTR_USER_NAME);
+        Integer userId = (Integer)request.getAttribute(Const.ATTR_USER_ID);
 
-        if(userName != null) {
-            log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 身份: {} | 请求参数列表: {}",
+        if(userId != null) {
+            log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 用户ID: {} | 请求参数列表: {}",
                     request.getServletPath(), request.getMethod(), IpUtils.getRealClientIp(request),
-                    userName, object);
+                    userId, object);
         } else {
             // 未认证用户：记录基础请求信息
             log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 身份: 未验证 | 请求参数列表: {}",

@@ -44,10 +44,8 @@ public class CheckTokenInterceptor implements HandlerInterceptor {
             JwtParser parser = Jwts.parserBuilder().setSigningKey(jwtSecretKey).build();
             //如果token正确，则正常执行，否则抛出异常
             Jws<Claims> claimsJws = parser.parseClaimsJws(token);
-            log.info(token);
-            request.setAttribute(Const.ATTR_USER_NAME, claimsJws.getBody().getSubject());
-            log.info("token校验成功");
-            log.info(claimsJws.getBody().getSubject());
+            log.info(claimsJws.getBody().get("userId").toString());
+            request.setAttribute(Const.ATTR_USER_ID, claimsJws.getBody().get("userId"));
             return true;
         }
     }

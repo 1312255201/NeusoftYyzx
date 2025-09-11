@@ -57,6 +57,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 }
                 user.setMenuList(menus);
                 HashMap<String, Object> map = new HashMap<>();
+                map.put("roleId", user.getRoleId());
+                map.put("userId", user.getId());
+                map.put("userName", user.getUsername());
                 //如果登录验证成功，则需要生成令牌token（token就是按照特定规则生成的字符串）
                 JwtBuilder builder = Jwts.builder();
                 String token = builder.setSubject(username) //主题，就是token中携带的数据
