@@ -33,7 +33,7 @@ public interface BeddetailsMapper extends BaseMapper<Beddetails> {
             "<if test='detailsDTO!=null and detailsDTO.startDate!=null and detailsDTO.endDate!=null'>" +
             "and b.start_date>=#{detailsDTO.startDate} and #{detailsDTO.endDate}>=b.start_date" +
             "</if>" +
-            "and b.is_deleted=#{detailsDTO.isDeleted}" +
+            " and b.is_deleted=#{detailsDTO.isDeleted}" +
             "</where>" +
             "order by b.end_date desc" +
             "</script>")
