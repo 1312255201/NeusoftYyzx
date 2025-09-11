@@ -80,23 +80,39 @@
 								<el-table-column align="center" :index="indexMethodRecord" type="index" label="序号"
 									width="40" />
 								<el-table-column align="center" prop="customerName" label="客户名称" width="100" />
-								<el-table-column align="center" prop="checkinDate" label="入住时间" width="100" />
-								<el-table-column align="center" prop="retreattime" label="退住时间" width="70" />
-								<el-table-column align="center" prop="retreattype" label="退住类型" width="100" />
-								<el-table-column align="center" prop="retreatreason" label="退住原因" width="100" />
-								<el-table-column align="center" prop="audittime" label="审批时间" width="100" />
-								<el-table-column align="center" prop="auditstatus" label="审批状态" width="100">
+								<el-table-column align="center" prop="checkinDate" label="入住时间" width="100">
 									<template #default="{row}">
-										{{ row.auditstatus === 0 ? '已提交' : row.auditstatus === 1 ? '同意' : '拒绝' }}
+										{{ row.checkinDate ? new Date(row.checkinDate).toLocaleDateString() : '' }}
 									</template>
 								</el-table-column>
-								<el-table-column align="center" prop="bedId" label="床位" width="100" />
+								<el-table-column align="center" prop="retreatTime" label="退住时间" width="100">
+									<template #default="{row}">
+										{{ row.retreatTime ? new Date(row.retreatTime).toLocaleDateString() : '' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="retreatType" label="退住类型" width="100">
+									<template #default="{row}">
+										{{ row.retreatType === 0 ? '正常退住' : row.retreatType === 1 ? '死亡退住' : '保留床位' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="retreatReason" label="退住原因" width="100" />
+								<el-table-column align="center" prop="auditTime" label="审批时间" width="100">
+									<template #default="{row}">
+										{{ row.auditTime ? new Date(row.auditTime).toLocaleDateString() : '' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="auditStatus" label="审批状态" width="100">
+									<template #default="{row}">
+										{{ row.auditStatus === 0 ? '已提交' : row.auditStatus === 1 ? '同意' : '拒绝' }}
+									</template>
+								</el-table-column>
+								<el-table-column align="center" prop="bedDetails" label="床位" width="100" />
 								<el-table-column align="center" label="操作" width="100">
 									<template #default="scope">
-										<el-button v-if="scope.row.auditstatus === 0 && dialog.item.roleId === 2"
+										<el-button v-if="scope.row.auditStatus === 0 && dialog.item.roleId === 2"
 											type="danger" size="small" round plain
 											@click="del(scope.row.id)">撤销申请</el-button>
-										<el-button v-if="scope.row.auditstatus === 0 && dialog.item.roleId !== 2"
+										<el-button v-if="scope.row.auditStatus === 0 && dialog.item.roleId !== 2"
 											type="primary" size="small" round plain
 											@click="examine(scope.row.id)">审批</el-button>
 									</template>

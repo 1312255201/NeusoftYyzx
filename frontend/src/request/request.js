@@ -57,6 +57,12 @@ const JSON_APIS = [
 	'/user/findAllUserPage',
 	'/user/addUser',
 	'/user/updateUser',
+
+	// 退住管理相关API
+	'/backdown/listBackdown',
+	'/backdown/addBackdown',
+	'/backdown/examineBackdown',
+	'/backdown/delBackdown',
 ];
 
 /**

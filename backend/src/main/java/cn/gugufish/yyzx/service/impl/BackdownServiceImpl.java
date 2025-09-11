@@ -20,8 +20,12 @@ public class BackdownServiceImpl extends ServiceImpl<BackdownMapper, Backdown> i
 
     @Override
     public ResultVo<Page<BackdownVo>> listBackdownVo(BackdownDTO backdownDTo) throws Exception {
-        Page<BackdownVo> page = new Page<>(backdownDTo.getPageSize(), 6);
-        backdownMapper.selectBackdownVo(page, backdownDTo.getUserId());
+        // 设置默认值
+        Integer pageNum = backdownDTo.getPageNum() != null ? backdownDTo.getPageNum() : 1;
+        Integer pageSize = backdownDTo.getPageSize() != null ? backdownDTo.getPageSize() : 10;
+        
+        Page<BackdownVo> page = new Page<>(pageNum, pageSize);
+        backdownMapper.selectBackdownVo(page, backdownDTo.getCustomerId());
         return ResultVo.ok(page);
     }
 

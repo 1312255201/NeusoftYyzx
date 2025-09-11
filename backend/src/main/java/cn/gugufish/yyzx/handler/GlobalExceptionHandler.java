@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +34,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultVo<String> handleExpiredJwtException(ExpiredJwtException e) {
         return ResultVo.fail("登录超时，请重新登录", "token_error");
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseBody
+    public ResultVo<String> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        log.error("不支持的媒体类型: " + e.getMessage());
+        return ResultVo.fail("请求格式错误，请使用正确的Content-Type", "media_type_error");
     }
 
     @ExceptionHandler(NullPointerException.class)

@@ -26,9 +26,7 @@ export function addBackdown(data) {
  * @returns {Promise} - 包含审核结果的Promise对象
  */
 export function examineBackdown(data) {
-	return http.get('/backdown/examineBackdown', {
-		params: data
-	});
+	return http.post('/backdown/examineBackdown', data);
 };
 
 /**

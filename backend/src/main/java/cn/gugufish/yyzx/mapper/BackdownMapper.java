@@ -29,7 +29,7 @@ public interface BackdownMapper extends BaseMapper<Backdown> {
             "cs.customer_name " +
             "FROM " +
             "backdown bdn, " +
-            "`user` u, " +
+            "user u, " +
             "beddetails bdd, " +
             "customer cs " +
             "WHERE " +
@@ -37,9 +37,9 @@ public interface BackdownMapper extends BaseMapper<Backdown> {
             "AND cs.id = bdn.customer_id " +
             "AND bdn.customer_id = bdd.customer_id " +
             "AND bdn.is_deleted = 0 " +
-            "<if test='userId != null and userId != \"\"'>" +
-            "AND u.id = #{userId}" +
+            "<if test='customerId != null and customerId != \"\"'>" +
+            "AND bdn.customer_id = #{customerId}" +
             "</if>" +
             "</script>")
-    Page<BackdownVo> selectBackdownVo(@Param("page") Page<BackdownVo> page, @Param("userId") Integer userId);
+    Page<BackdownVo> selectBackdownVo(@Param("page") Page<BackdownVo> page, @Param("customerId") Integer customerId);
 }
