@@ -3,7 +3,7 @@ package cn.gugufish.yyzx.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.gugufish.yyzx.pojo.Nurserecord;
-import cn.gugufish.yyzx.vo.NurseRecordsVo;
+import cn.gugufish.yyzx.pojo.vo.NurseRecordsVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

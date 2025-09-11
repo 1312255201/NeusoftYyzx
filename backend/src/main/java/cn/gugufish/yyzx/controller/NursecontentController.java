@@ -3,7 +3,7 @@ package cn.gugufish.yyzx.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.gugufish.yyzx.dto.NurseItemDTO;
+import cn.gugufish.yyzx.pojo.dto.NurseItemDTO;
 import cn.gugufish.yyzx.pojo.Nursecontent;
 import cn.gugufish.yyzx.service.NursecontentService;
 import cn.gugufish.yyzx.utils.ResultVo;

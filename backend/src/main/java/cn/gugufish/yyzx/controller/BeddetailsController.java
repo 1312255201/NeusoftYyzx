@@ -1,12 +1,12 @@
 package cn.gugufish.yyzx.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.gugufish.yyzx.dto.BedDetailsDTO;
-import cn.gugufish.yyzx.dto.ExchangeDTO;
+import cn.gugufish.yyzx.pojo.dto.BedDetailsDTO;
+import cn.gugufish.yyzx.pojo.dto.ExchangeDTO;
 import cn.gugufish.yyzx.pojo.Beddetails;
 import cn.gugufish.yyzx.service.BeddetailsService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.BedDetailsVo;
+import cn.gugufish.yyzx.pojo.vo.BedDetailsVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;

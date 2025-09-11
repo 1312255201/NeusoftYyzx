@@ -3,12 +3,12 @@ package cn.gugufish.yyzx.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.gugufish.yyzx.dto.BackdownDTO;
+import cn.gugufish.yyzx.pojo.dto.BackdownDTO;
 import cn.gugufish.yyzx.mapper.BackdownMapper;
 import cn.gugufish.yyzx.pojo.Backdown;
 import cn.gugufish.yyzx.service.BackdownService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.BackdownVo;
+import cn.gugufish.yyzx.pojo.vo.BackdownVo;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;

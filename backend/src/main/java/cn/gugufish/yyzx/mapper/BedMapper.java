@@ -2,7 +2,7 @@ package cn.gugufish.yyzx.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import cn.gugufish.yyzx.pojo.Bed;
-import cn.gugufish.yyzx.vo.CwsyBedVo;
+import cn.gugufish.yyzx.pojo.vo.CwsyBedVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 

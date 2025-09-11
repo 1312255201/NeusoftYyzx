@@ -3,7 +3,7 @@ package cn.gugufish.yyzx.controller;
 import cn.gugufish.yyzx.pojo.Room;
 import cn.gugufish.yyzx.service.RoomService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.CwsyBedVo;
+import cn.gugufish.yyzx.pojo.vo.CwsyBedVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

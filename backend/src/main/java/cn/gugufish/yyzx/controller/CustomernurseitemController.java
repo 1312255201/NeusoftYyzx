@@ -2,11 +2,11 @@ package cn.gugufish.yyzx.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.gugufish.yyzx.dto.CustomerNurseItemDTO;
+import cn.gugufish.yyzx.pojo.dto.CustomerNurseItemDTO;
 import cn.gugufish.yyzx.pojo.Customernurseitem;
 import cn.gugufish.yyzx.service.CustomernurseitemService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.CustomerNurseItemVo;
+import cn.gugufish.yyzx.pojo.vo.CustomerNurseItemVo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

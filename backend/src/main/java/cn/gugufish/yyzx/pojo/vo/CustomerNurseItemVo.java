@@ -1,4 +1,4 @@
-package cn.gugufish.yyzx.vo;
+package cn.gugufish.yyzx.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,7 +14,6 @@ import java.util.Date;
 @Schema(name = "CustomerNurseItemVo对象", description = "")
 public class CustomerNurseItemVo {
     @Schema(description = "主键")
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @Schema(description = "护理项目编号")

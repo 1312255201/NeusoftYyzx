@@ -1,4 +1,4 @@
-package cn.gugufish.yyzx.vo;
+package cn.gugufish.yyzx.pojo.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -16,7 +16,6 @@ import java.util.Date;
 public class KhxxCustomerVo implements Serializable {
 
     @Schema(description = "主键")
-    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @Schema(description = "逻辑删除标记（0：显示；1：隐藏）")

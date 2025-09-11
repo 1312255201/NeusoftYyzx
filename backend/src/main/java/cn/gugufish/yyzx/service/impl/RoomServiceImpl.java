@@ -7,7 +7,7 @@ import cn.gugufish.yyzx.mapper.RoomMapper;
 import cn.gugufish.yyzx.pojo.Room;
 import cn.gugufish.yyzx.service.RoomService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.CwsyBedVo;
+import cn.gugufish.yyzx.pojo.vo.CwsyBedVo;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;

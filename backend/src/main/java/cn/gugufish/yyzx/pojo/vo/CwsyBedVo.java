@@ -1,4 +1,4 @@
-package cn.gugufish.yyzx.vo;
+package cn.gugufish.yyzx.pojo.vo;
 
 import cn.gugufish.yyzx.pojo.Room;
 import io.swagger.v3.oas.annotations.media.Schema;

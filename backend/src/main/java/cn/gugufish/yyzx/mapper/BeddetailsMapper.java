@@ -2,9 +2,9 @@ package cn.gugufish.yyzx.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.gugufish.yyzx.dto.BedDetailsDTO;
+import cn.gugufish.yyzx.pojo.dto.BedDetailsDTO;
 import cn.gugufish.yyzx.pojo.Beddetails;
-import cn.gugufish.yyzx.vo.BedDetailsVo;
+import cn.gugufish.yyzx.pojo.vo.BedDetailsVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;

@@ -3,12 +3,12 @@ package cn.gugufish.yyzx.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.gugufish.yyzx.dto.OutwardDTO;
+import cn.gugufish.yyzx.pojo.dto.OutwardDTO;
 import cn.gugufish.yyzx.mapper.OutwardMapper;
 import cn.gugufish.yyzx.pojo.Outward;
 import cn.gugufish.yyzx.service.OutwardService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.OutwardVo;
+import cn.gugufish.yyzx.pojo.vo.OutwardVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

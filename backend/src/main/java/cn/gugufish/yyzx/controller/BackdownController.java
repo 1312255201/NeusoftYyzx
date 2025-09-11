@@ -1,8 +1,8 @@
 package cn.gugufish.yyzx.controller;
 
-import cn.gugufish.yyzx.vo.BackdownVo;
+import cn.gugufish.yyzx.pojo.vo.BackdownVo;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import cn.gugufish.yyzx.dto.BackdownDTO;
+import cn.gugufish.yyzx.pojo.dto.BackdownDTO;
 import cn.gugufish.yyzx.pojo.Backdown;
 import cn.gugufish.yyzx.pojo.Bed;
 import cn.gugufish.yyzx.pojo.Customer;
@@ -14,8 +14,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

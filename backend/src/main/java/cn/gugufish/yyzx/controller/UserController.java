@@ -3,7 +3,7 @@ package cn.gugufish.yyzx.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import cn.gugufish.yyzx.dto.UserDTO;
+import cn.gugufish.yyzx.pojo.dto.UserDTO;
 import cn.gugufish.yyzx.pojo.User;
 import cn.gugufish.yyzx.service.UserService;
 import cn.gugufish.yyzx.utils.RedisTokenBlacklistUtil;
@@ -11,11 +11,8 @@ import cn.gugufish.yyzx.utils.ResultVo;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

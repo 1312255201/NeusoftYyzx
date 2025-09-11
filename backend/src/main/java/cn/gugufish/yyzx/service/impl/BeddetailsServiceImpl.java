@@ -1,10 +1,9 @@
 package cn.gugufish.yyzx.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import cn.gugufish.yyzx.dto.BedDetailsDTO;
-import cn.gugufish.yyzx.dto.ExchangeDTO;
+import cn.gugufish.yyzx.pojo.dto.BedDetailsDTO;
+import cn.gugufish.yyzx.pojo.dto.ExchangeDTO;
 import cn.gugufish.yyzx.mapper.BedMapper;
 import cn.gugufish.yyzx.mapper.BeddetailsMapper;
 import cn.gugufish.yyzx.mapper.CustomerMapper;
@@ -13,7 +12,7 @@ import cn.gugufish.yyzx.pojo.Beddetails;
 import cn.gugufish.yyzx.pojo.Customer;
 import cn.gugufish.yyzx.service.BeddetailsService;
 import cn.gugufish.yyzx.utils.ResultVo;
-import cn.gugufish.yyzx.vo.BedDetailsVo;
+import cn.gugufish.yyzx.pojo.vo.BedDetailsVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
