@@ -43,8 +43,16 @@
 						</el-table-column>
 						<el-table-column align="center" prop="bedDetails" label="床位详情" width="120" />
 						<!-- <el-table-column align="center" prop="roomNo" label="房间号" width="120" /> -->
-						<el-table-column align="center" prop="startDate" label="床位使用起始日期" width="150" />
-						<el-table-column align="center" prop="endDate" label="床位使用结束日期" width="150" />
+						<el-table-column align="center" prop="startDate" label="床位使用起始日期" width="150">
+						<template #default="scope">
+							{{ formatDate(scope.row.startDate, 'YYYY年MM月DD日') }}
+						</template>
+					</el-table-column>
+					<el-table-column align="center" prop="endDate" label="床位使用结束日期" width="150">
+						<template #default="scope">
+							{{ formatDate(scope.row.endDate, 'YYYY年MM月DD日') }}
+						</template>
+					</el-table-column>
 						<el-table-column align="center" fixed="right" label="操作" width="220">
 							<template #default="scope">
 								<el-button type="warning" link icon="Switch" v-if="btnFlag" size="small"
@@ -242,6 +250,7 @@
 	import {
 		listRoom
 	} from '@/api/roomApi.js'
+	import { formatDate, formatSmartDate } from '@/utils/common.js'
 
 	export default {
 		computed: {
@@ -335,6 +344,9 @@
 			};
 		},
 		methods: {
+			// 时间格式化方法
+			formatDate,
+			formatSmartDate,
 			// 初始化查询条件
 			reset() {
 				this.queryParams.startDate = '';

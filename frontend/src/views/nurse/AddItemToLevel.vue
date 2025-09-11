@@ -169,10 +169,12 @@
 			};
 		},
 		mounted() {
+			// 初始化防抖函数
+			this.debouncedCalcHeight = this.debounce(this.calcTableHeight, 100);
 			// 计算表格高度
 			this.calcTableHeight();
 			// 监听窗口大小变化
-			window.addEventListener('resize', this.calcTableHeight);
+			window.addEventListener('resize', this.debouncedCalcHeight, { passive: true });
 
 			// 获取路由参数
 			this.levelId = this.$route.query.levelId;
@@ -189,8 +191,12 @@
 			this.listNurseItemByLevel();
 		},
 		beforeUnmount() {
+			// 清理定时器
+			if (this.resizeTimer) {
+				clearTimeout(this.resizeTimer);
+			}
 			// 移除事件监听
-			window.removeEventListener('resize', this.calcTableHeight);
+			window.removeEventListener('resize', this.debouncedCalcHeight, { passive: true });
 		},
 		computed: {
 			// 左侧表格序号计算
@@ -199,10 +205,38 @@
 			}
 		},
 		methods: {
+			// 防抖函数：限制函数执行频率，避免ResizeObserver循环
+			debounce(func, delay) {
+				return (...args) => {
+					try {
+						clearTimeout(this.resizeTimer);
+						this.resizeTimer = setTimeout(() => func.apply(this, args), delay);
+					} catch (error) {
+						if (error.message && error.message.includes('ResizeObserver')) {
+							console.warn('ResizeObserver循环已被捕获并忽略');
+							return;
+						}
+						throw error;
+					}
+				};
+			},
+
 			// 计算表格最大高度
 			calcTableHeight() {
-				// 窗口高度 - 头部高度 - 边距（根据实际布局调整）
-				this.tableMaxHeight = window.innerHeight - 200;
+				try {
+					requestAnimationFrame(() => {
+						const newHeight = window.innerHeight - 200;
+						if (Math.abs(newHeight - this.tableMaxHeight) > 5) {
+							this.tableMaxHeight = newHeight;
+						}
+					});
+				} catch (error) {
+					if (error.message && error.message.includes('ResizeObserver')) {
+						console.warn('calcTableHeight ResizeObserver错误已被捕获');
+						return;
+					}
+					console.error('calcTableHeight错误:', error);
+				}
 			},
 
 			// 点击查询

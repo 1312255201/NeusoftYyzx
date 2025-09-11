@@ -68,9 +68,21 @@
 						<el-table-column align="center" prop="buildingNo" label="所属楼房" width="80" />
 						<el-table-column align="center" prop="roomNo" label="房间号" width="80" />
 						<el-table-column align="center" prop="bedNo" label="床号" width="80" />
-						<el-table-column align="center" prop="birthday" label="出生日期" width="150" />
-						<el-table-column align="center" prop="checkinDate" label="入住时间" width="150" />
-						<el-table-column align="center" prop="expirationDate" label="合同到期时间" width="150" />
+						<el-table-column align="center" prop="birthday" label="出生日期" width="150">
+						<template #default="scope">
+							{{ formatDate(scope.row.birthday, 'YYYY年MM月DD日') }}
+						</template>
+					</el-table-column>
+					<el-table-column align="center" prop="checkinDate" label="入住时间" width="150">
+						<template #default="scope">
+							{{ formatSmartDate(scope.row.checkinDate) }}
+						</template>
+					</el-table-column>
+					<el-table-column align="center" prop="expirationDate" label="合同到期时间" width="150">
+						<template #default="scope">
+							{{ formatSmartDate(scope.row.expirationDate) }}
+						</template>
+					</el-table-column>
 						<el-table-column align="center" prop="levelName" label="护理级别" width="80" />
 						<el-table-column align="center" prop="nickName" label="健康管家(护工)" width="120" />
 						<el-table-column align="center" prop="psychosomaticState" label="身心状况" width="200" />
@@ -200,6 +212,8 @@
 		removeCustomer,
 		editKhxx
 	} from "@/api/customerApi.js";
+	// 导入时间格式化工具
+	import { formatDate, formatSmartDate } from '@/utils/common.js';
 	// 导入图标组件
 	import {
 		Plus,
@@ -366,6 +380,9 @@
 		},
 		// 方法定义
 		methods: {
+			// 时间格式化方法
+			formatDate,
+			formatSmartDate,
 			// 入住时间限制（只能选择今天及以后的日期）
 			disabledDate(time) {
 				return time.getTime() < Date.now() - 1000 * 60 * 60 * 24;

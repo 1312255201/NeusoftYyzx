@@ -81,7 +81,11 @@
 								<el-table-column align="center" prop="nursingContent" label="护理内容" width="120" />
 								<el-table-column align="center" prop="nickname" label="护理人员" width="100" />
 								<el-table-column align="center" prop="phoneNumber" label="护理人员号码" width="120" />
-								<el-table-column align="center" prop="nursingTime" label="护理时间" width="140" />
+								<el-table-column align="center" prop="nursingTime" label="护理时间" width="140">
+							<template #default="scope">
+								{{ formatSmartDate(scope.row.nursingTime) }}
+							</template>
+						</el-table-column>
 								<el-table-column align="center" label="操作" width="100">
 									<template #default="scope">
 										<el-button type="danger" size="small" class="operation-btn"
@@ -116,15 +120,18 @@
 
 <script>
 	import {
-		listKhxxPage
-	} from "@/api/customerApi.js";
-	import {
-		listNurseRecordsVo,
-		softDeleteCustomerRecord
-	} from "@/api/nurseRecordApi.js";
-	import {
-		Search
-	} from '@element-plus/icons-vue'
+	listKhxxPage
+} from "@/api/customerApi.js";
+import {
+	listNurseRecordsVo,
+	softDeleteCustomerRecord
+} from "@/api/nurseRecordApi.js";
+import {
+	Search
+} from '@element-plus/icons-vue'
+import {
+	formatSmartDate
+} from '@/utils/common.js'
 
 	export default {
 		components: {
@@ -184,6 +191,9 @@
 			window.removeEventListener('resize', this.calcTableHeight);
 		},
 		methods: {
+			// 格式化时间显示
+			formatSmartDate,
+			
 			// 计算表格最大高度
 			calcTableHeight() {
 				// 窗口高度 - 头部高度 - 边距（根据实际布局调整）

@@ -80,7 +80,11 @@
 								<el-table-column align="center" prop="nursingName" label="名称" />
 								<el-table-column align="center" prop="servicePrice" label="价格" />
 								<el-table-column align="center" prop="nurseNumber" label="余量" />
-								<el-table-column align="center" prop="maturityTime" label="服务到期日期" />
+								<el-table-column align="center" prop="maturityTime" label="服务到期日期">
+								<template #default="scope">
+									{{ formatSmartDate(scope.row.maturityTime) }}
+								</template>
+							</el-table-column>
 								<el-table-column align="center" prop label="状态">
 									<template #default="scope">
 										<el-tag v-if="0 < scope.row.nurseNumber && scope.row.nurseNumber < 10"
@@ -180,6 +184,7 @@
 		Edit,
 		Delete
 	} from '@element-plus/icons-vue'
+	import { formatSmartDate } from '@/utils/common.js';
 
 	export default {
 		components: {
@@ -267,6 +272,10 @@
 			};
 		},
 		methods: {
+			// 时间格式化方法
+			formatSmartDate(dateStr) {
+				return formatSmartDate(dateStr);
+			},
 			// 点击查询
 			query() {
 				// 重置页码为第一页

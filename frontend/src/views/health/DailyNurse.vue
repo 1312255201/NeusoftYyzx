@@ -108,10 +108,10 @@
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="maturityTime" label="服务到期时间" width="160">
-									<template #default="scope">
-										<span>{{ formatDate(scope.row.maturityTime) || '未设置' }}</span>
-									</template>
-								</el-table-column>
+								<template #default="scope">
+									<span>{{ formatSmartDate(scope.row.maturityTime) || '未设置' }}</span>
+								</template>
+							</el-table-column>
 								<el-table-column align="center" label="状态" width="100">
 									<template #default="scope">
 										<el-tag :type="getStatusType(scope.row.maturityTime)">
@@ -210,6 +210,9 @@
 		Search,
 		Star
 	} from '@element-plus/icons-vue'
+	import {
+		formatSmartDate
+	} from '@/utils/common.js'
 
 	export default {
 		components: {
@@ -303,6 +306,9 @@
 			window.removeEventListener('resize', this.calcTableHeight);
 		},
 		methods: {
+			// 格式化时间显示
+			formatSmartDate,
+			
 			// 计算表格最大高度
 			calcTableHeight() {
 				// 窗口高度 - 头部高度 - 边距
