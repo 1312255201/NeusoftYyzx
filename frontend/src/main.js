@@ -26,4 +26,7 @@ import {
 } from 'element-plus'
 app.config.globalProperties.$notify = ElNotification
 
+// 初始化主题
+store.dispatch('initTheme')
+
 app.mount('#app')

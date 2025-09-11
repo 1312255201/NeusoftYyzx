@@ -64,3 +64,32 @@
 		height: 100%;
 	}
 </style>
+
+<style scoped>
+.layout {
+  height: 100%;
+  background-color: var(--bg-color-page);
+  transition: background-color 0.3s ease;
+}
+
+.el-container {
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+.el-header {
+  background-color: var(--header-bg-color);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.el-aside {
+  background-color: var(--aside-bg-color);
+  transition: background-color 0.3s ease;
+}
+
+.el-main {
+  background-color: var(--bg-color-page);
+  transition: background-color 0.3s ease;
+}
+</style>

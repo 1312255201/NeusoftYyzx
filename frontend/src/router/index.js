@@ -90,8 +90,8 @@ function initRouter() {
 router.beforeEach((to, from, next) => {
 	// 判断是否登录
 	let token = sessionStorage.getItem('token');
-	if (to.path != '/login') {
-		if (token == null || token == '') {
+	if (to.path !== '/login') {
+		if (token == null || token === '') {
 			next('/login')
 		}
 	}
@@ -100,7 +100,7 @@ router.beforeEach((to, from, next) => {
 	let menuArray = store.getters.menus;
 
 	// 第一次访问登录页面时，并没有菜单列表，此时也动态加载了路由并让length变成了3，导致登录后不会再执行初始化加载路由,加上其他额外条件
-	if (router.getRoutes().length == 3 && menuArray != null && menuArray.length > 0 && menuArray !=
+	if (router.getRoutes().length === 3 && menuArray != null && menuArray.length > 0 && menuArray !==
 		'undefined') {
 		// 需要动态加载路由信息
 		initRouter();
@@ -120,7 +120,7 @@ router.beforeEach((to, from, next) => {
 		secondLevelSize = menus[i].children.length;
 		for (let j = 0; j < secondLevelSize; j++) {
 			// 说明找到了
-			if (menus[i].children[j].path == currentPath) {
+			if (menus[i].children[j].path === currentPath) {
 				currentMenu = menus[i].children[j];
 				break;
 			}

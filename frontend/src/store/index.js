@@ -9,7 +9,8 @@ import {
 export default createStore({
 	state: {
 		tabs: [],
-		menus: getSessionStorage('menuList') || []
+		menus: getSessionStorage('menuList') || [],
+		theme: getSessionStorage('theme') || 'light' // 主题状态：light 或 dark
 	},
 	getters: {
 		tabs(state) {
@@ -17,6 +18,12 @@ export default createStore({
 		},
 		menus(state) {
 			return state.menus;
+		},
+		theme(state) {
+			return state.theme;
+		},
+		isDarkMode(state) {
+			return state.theme === 'dark';
 		}
 	},
 	mutations: {
@@ -44,6 +51,19 @@ export default createStore({
 				}
 			}
 		},
+		// 主题相关mutations
+		setTheme(state, theme) {
+			state.theme = theme;
+			setSessionStorage('theme', theme);
+			// 更新HTML根元素的data-theme属性
+			document.documentElement.setAttribute('data-theme', theme);
+		},
+		toggleTheme(state) {
+			const newTheme = state.theme === 'light' ? 'dark' : 'light';
+			state.theme = newTheme;
+			setSessionStorage('theme', newTheme);
+			document.documentElement.setAttribute('data-theme', newTheme);
+		}
 	},
 	actions: {
 		// 添加setMenu action
@@ -51,6 +71,24 @@ export default createStore({
 			commit
 		}, menu) {
 			commit('addMenus', menu);
+		},
+		// 主题相关actions
+		initTheme({
+			commit,
+			state
+		}) {
+			// 初始化主题，设置HTML根元素的data-theme属性
+			document.documentElement.setAttribute('data-theme', state.theme);
+		},
+		changeTheme({
+			commit
+		}, theme) {
+			commit('setTheme', theme);
+		},
+		toggleTheme({
+			commit
+		}) {
+			commit('toggleTheme');
 		}
 	},
 	modules: {}
