@@ -201,11 +201,14 @@
 		listNurseItemByLevel
 	} from "@/api/nurseLevelApi.js";
 	import {
-		addItemToCustomer,
-		removeCustomerLevelAndItem,
-		updateNurseItem,
-		listCustomerItem // 导入获取客户护理项目的API
-	} from "@/api/customerNurseItemApi.js";
+	addItemToCustomer,
+	removeCustomerLevelAndItem,
+	updateNurseItem,
+	listCustomerItem // 导入获取客户护理项目的API
+} from "@/api/customerNurseItemApi.js";
+import {
+	addNurseRecord
+} from "@/api/nurseRecordApi.js";
 	import {
 		Search,
 		Star
@@ -244,7 +247,8 @@
 				// 护理记录抽屉数据
 				recordDrawer: {
 					visible: false,
-					currentItem: null // 当前选中的护理项目
+					currentItem: null, // 当前选中的护理项目
+					submitting: false // 防止重复提交
 				},
 				// 护理记录表单数据
 				recordForm: {
@@ -415,6 +419,7 @@
 			handleRecordClose() {
 				this.recordDrawer.visible = false;
 				this.recordDrawer.currentItem = null;
+				this.recordDrawer.submitting = false;
 				// 重置表单验证状态
 				if (this.$refs.recordForm) {
 					this.$refs.recordForm.resetFields();
@@ -423,6 +428,11 @@
 
 			// 提交护理记录
 			submitRecord() {
+				// 防止重复提交
+				if (this.recordDrawer.submitting) {
+					return;
+				}
+				
 				this.$refs.recordForm.validate(valid => {
 					if (!valid) {
 						return false;
@@ -443,26 +453,50 @@
 						return false;
 					}
 
-					// 这里可以添加保存护理记录的API调用
-					// 模拟API调用
-					new Promise(resolve => {
-							setTimeout(() => {
-								resolve({
-									flag: true,
-									message: '护理记录创建成功'
-								});
-							}, 500);
-						})
+					// 调用真实的护理记录API
+					// 格式化日期时间为ISO格式
+					const formatDateTime = (dateTimeStr) => {
+						if (!dateTimeStr) return null;
+						// 如果是 "YYYY-MM-DD HH:mm" 格式，转换为 "YYYY-MM-DDTHH:mm:ss"
+						if (dateTimeStr.includes(' ') && !dateTimeStr.includes('T')) {
+							return dateTimeStr.replace(' ', 'T') + ':00';
+						}
+						return dateTimeStr;
+					};
+					
+					const recordData = {
+						customerId: this.drawer.customerId,
+						itemId: this.recordDrawer.currentItem.id,
+						userId: JSON.parse(sessionStorage.getItem('user') || '{}').id,
+						serialNumber: this.recordForm.serialNumber,
+						nursingName: this.recordForm.nursingName,
+						nursingTime: formatDateTime(this.recordForm.nursingTime),
+						nursingCount: this.recordForm.nursingCount,
+						nursingContent: this.recordForm.nursingContent
+					};
+					
+					// 设置提交状态
+					this.recordDrawer.submitting = true;
+					
+					addNurseRecord(recordData)
 						.then(res => {
 							if (res && res.flag) {
+								this.$message.success(res.message || '护理记录创建成功');
 								// 关闭抽屉
 								this.handleRecordClose();
 								// 执行护理服务（减少余量）
 								this.executeNursing(this.recordDrawer.currentItem);
+							} else {
+								this.$message.error(res.message || '护理记录创建失败');
 							}
 						})
 						.catch(error => {
 							console.error('提交护理记录失败:', error);
+							this.$message.error('网络错误，请稍后重试');
+						})
+						.finally(() => {
+							// 重置提交状态
+							this.recordDrawer.submitting = false;
 						});
 				});
 			},
@@ -554,6 +588,12 @@
 
 			// 执行护理服务
 			executeNursing(item) {
+				// 检查item是否存在
+				if (!item) {
+					console.warn('executeNursing: item参数为空');
+					return;
+				}
+				
 				if (item.nurseNumber <= 0) {
 					return;
 				}
@@ -716,8 +756,10 @@
 						levelId: this.drawer.levelId
 					})
 					.then(res => {
-						const data = res.data || {};
-						const newArr = Array.isArray(data.data) ? data.data : [];
+					console.log('listNurseItemByLevel响应:', res);
+					const data = res.data || [];
+					console.log('解析后的数据:', data);
+					const newArr = Array.isArray(data) ? data : [];
 
 						// 处理返回的护理项目数据
 						this.drawer.allItems = newArr.map(item => {

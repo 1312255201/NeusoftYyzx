@@ -54,7 +54,11 @@
 					<el-table :data="userList" style="width: 100% ;color:black;" stripe>
 						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" />
 						<el-table-column align="center" prop="id" label="编号" width="120" />
-						<el-table-column align="center" prop="createTime" label="创建时间" width="180" />
+						<el-table-column align="center" prop="createTime" label="创建时间" width="180">
+							<template #default="scope">
+								{{ formatSmartDate(scope.row.createTime) }}
+							</template>
+						</el-table-column>
 						<el-table-column align="center" prop="username" label="用户名" width="120" />
 						<el-table-column align="center" prop="nickname" label="真实姓名" width="120" />
 						<el-table-column align="center" prop="sex" label="性别" width="120">
@@ -150,7 +154,8 @@
 	} from "@/api/userApi.js";
 	import {
 		getSessionStorage,
-		getCurDate
+		getCurDate,
+		formatSmartDate
 	} from "@/utils/common.js"
 	import {
 		Plus,
@@ -250,6 +255,10 @@
 			this.getAllUserList();
 		},
 		methods: {
+			// 格式化时间显示
+			formatSmartDate(date) {
+				return formatSmartDate(date);
+			},
 			// 点击查询
 			query() {
 				this.page.currentPage = 1;

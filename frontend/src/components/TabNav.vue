@@ -14,8 +14,11 @@
 </template>
 
 <script>
-	export default {
+	import {CloseBold} from "@element-plus/icons-vue";
+
+  export default {
 		name: "TabNav",
+    components: {CloseBold},
 		methods: {
 			/**
 			 * 点击了tab选项卡

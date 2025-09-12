@@ -345,9 +345,12 @@
 				listNurseItemByLevel({
 					levelId: this.levelId
 				}).then(res => {
+					console.log('listNurseItemByLevel响应:', res);
 					if (res.flag) {
-						const items = res.data?.data || [];
+						// 修复数据解析：数据直接在res.data中，不是res.data.data
+						const items = res.data || [];
 						this.allLevelItems = Array.isArray(items) ? items : [];
+						console.log('解析的护理项目数据:', this.allLevelItems);
 						// 初始化分页数据
 						this.levelPage.total = this.allLevelItems.length;
 						this.levelPage.pagCount = Math.ceil(this.levelPage.total / this.levelPage.pageSize);

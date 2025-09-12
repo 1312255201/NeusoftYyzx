@@ -63,6 +63,10 @@ const JSON_APIS = [
 	'/backdown/addBackdown',
 	'/backdown/examineBackdown',
 	'/backdown/delBackdown',
+
+	// 护理记录相关API
+	'/nurserecord/addNurseRecord',
+	'/nurserecord/queryOutwardVo',
 ];
 
 /**

@@ -96,7 +96,7 @@ public class CustomernurseitemServiceImpl extends ServiceImpl<CustomernurseitemM
 
     @Override
     public ResultVo<Page<CustomerNurseItemVo>> listCustomerItem(CustomerNurseItemDTO customerNurseItemDTO) throws Exception {
-        Page<CustomerNurseItemVo> page = new Page<>(customerNurseItemDTO.getPageSize(), 10                    );
+        Page<CustomerNurseItemVo> page = new Page<>(customerNurseItemDTO.getPageSize(), 10  );
         customernurseitemMapper.selectCustomerItemVo(page, customerNurseItemDTO.getCustomerId());
         return ResultVo.ok(page);
     }

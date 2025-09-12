@@ -1,7 +1,7 @@
 <template>
 	<el-header id="header">
 		<div>
-			<img style="width:200px;height:40px;margin:20px 0 0 -12px" src="@/assets/welcome.png" />
+			<img style="width:40px;height:40px;margin:20px 0 0 -12px" src="@/assets/logosmall.jpg" />
 		</div>
 
 		<el-dropdown split-button type="default">
