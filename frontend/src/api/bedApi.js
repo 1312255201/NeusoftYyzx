@@ -60,9 +60,5 @@ export function exchangeBed(data) {
  * @returns {Promise} - 包含响应数据的Promise对象
  */
 export function delBedDetails(id) {
-	return http.post('/beddetails/delBedDetails', id, {
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+	return http.post('/beddetails/delBedDetails', id);
 };

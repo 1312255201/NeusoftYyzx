@@ -467,9 +467,7 @@
 					cancelButtonText: '取消',
 					type: 'warning',
 				}).then(() => {
-					delBedDetails({
-						id: id
-					}).then(res => {
+					delBedDetails(id).then(res => {
 						if (res.flag) {
 							this.$message.success(res.message);
 							// 重载表格

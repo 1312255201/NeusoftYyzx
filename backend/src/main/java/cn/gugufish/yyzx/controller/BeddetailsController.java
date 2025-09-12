@@ -1,5 +1,6 @@
 package cn.gugufish.yyzx.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.gugufish.yyzx.pojo.dto.BedDetailsDTO;
 import cn.gugufish.yyzx.pojo.dto.ExchangeDTO;
@@ -29,21 +30,21 @@ public class BeddetailsController {
 
     @PostMapping("/updateBedDetails")
     @Operation(summary = "更新床位使用详情-只能修改床位使用结束时间")
-    public ResultVo<Void> updateBedDetails(Beddetails beddetails) throws Exception {
+    public ResultVo<Void> updateBedDetails(@RequestBody Beddetails beddetails) throws Exception {
         beddetailsService.updateById(beddetails);
         return ResultVo.ok("编辑成功");
     }
 
     @PostMapping("/exchangeBed")
     @Operation(summary = "床位调换")
-    public ResultVo<Void>  exchangeBed(ExchangeDTO exchangeDTO) throws Exception {
+    public ResultVo<Void>  exchangeBed(@RequestBody ExchangeDTO exchangeDTO) throws Exception {
         return beddetailsService.exchangeBed(exchangeDTO);
     }
 
     @PostMapping("/delBedDetails")
     @Operation(summary = "删除记录")
     public ResultVo<Void> delBedDetails(@RequestBody Integer id) throws Exception {
-        beddetailsService.removeById(id);
+        beddetailsService.remove(new LambdaQueryWrapper<Beddetails>().eq(Beddetails::getId, id));
         return ResultVo.ok("删除成功");
     }
 

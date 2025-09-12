@@ -89,16 +89,15 @@ public class BeddetailsServiceImpl extends ServiceImpl<BeddetailsMapper, Beddeta
         // 查询当前床位的有效床位详情信息（is_deleted=0且结束日期大于当前日期）
         QueryWrapper<Beddetails> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("bed_id", bedId)
-                   .eq("is_deleted", 0)
+                .eq("is_deleted", 0)
                    .orderByDesc("start_date")
                    .last("LIMIT 1");
         
         Beddetails beddetails = beddetailsMapper.selectOne(queryWrapper);
-        
+
         if (beddetails == null) {
             return ResultVo.fail("该床位暂无人员信息");
         }
-        
         // 查询客户信息
         Customer customer = customerMapper.selectById(beddetails.getCustomerId());
         if (customer == null) {
@@ -110,7 +109,10 @@ public class BeddetailsServiceImpl extends ServiceImpl<BeddetailsMapper, Beddeta
         if (bed == null) {
             return ResultVo.fail("未找到床位信息");
         }
-        
+        if(bed.getBedStatus() == 1)
+        {
+            return ResultVo.fail("当前床位无人员信息");
+        }
         // 构建返回的BedDetailsVo对象
         BedDetailsVo bedDetailsVo = new BedDetailsVo();
         bedDetailsVo.setId(beddetails.getId());

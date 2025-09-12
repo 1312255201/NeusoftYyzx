@@ -30,7 +30,7 @@ public interface CustomerpreferenceMapper extends BaseMapper<Customerpreference>
             "<where>" +
             "cp.is_deleted = 0 " +
             "<if test='customer_name != null and customer_name != \"\"'>" +
-            "AND c.customer_name = #{customer_name}" +
+            "AND c.customer_name like concat('%', #{customer_name}, '%')" +
             "</if>" +
             "</where>" +
             "</script>")
