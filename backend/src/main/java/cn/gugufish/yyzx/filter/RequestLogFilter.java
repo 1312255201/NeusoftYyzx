@@ -17,9 +17,11 @@ import org.slf4j.MDC;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /**
@@ -71,19 +73,21 @@ public class RequestLogFilter extends OncePerRequestFilter {
         if(this.isIgnoreUrl(request.getServletPath())) {
             filterChain.doFilter(request, response);
         } else {
-            // 记录请求开始时间，用于计算处理耗时
             long startTime = System.currentTimeMillis();
-            // 记录请求开始信息
-            this.logRequestStart(request);
             
-            // 使用ContentCachingResponseWrapper包装响应，以便读取响应内容
-            ContentCachingResponseWrapper wrapper = new ContentCachingResponseWrapper(response);
-            filterChain.doFilter(request, wrapper);
+            ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
+            ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
             
-            // 记录请求结束信息
-            this.logRequestEnd(wrapper, startTime);
-            // 将缓存的响应内容写回客户端
-            wrapper.copyBodyToResponse();
+            try {
+                // 执行过滤器链
+                filterChain.doFilter(requestWrapper, responseWrapper);
+            } finally {
+                // 记录请求信息（在过滤器链执行后，此时可以读取到完整的请求体数据）
+                this.logRequest(requestWrapper, responseWrapper, startTime);
+                
+                // 确保响应内容被写回到原始响应中
+                responseWrapper.copyBodyToResponse();
+            }
         }
     }
 
@@ -102,55 +106,79 @@ public class RequestLogFilter extends OncePerRequestFilter {
     }
 
     /**
-     * 记录请求结束时的日志信息
-     * 包含请求处理耗时、响应状态码和响应内容
+     * 记录完整的请求信息
+     * 包含请求的详细信息和响应结果，在过滤器链执行后调用以确保能读取到完整的请求体数据
      * 
-     * @param wrapper 响应包装器，用于读取响应内容
+     * @param requestWrapper 请求包装器
+     * @param responseWrapper 响应包装器
      * @param startTime 请求开始时间戳
      */
-    public void logRequestEnd(ContentCachingResponseWrapper wrapper, long startTime){
-        // 计算请求处理耗时
-        long time = System.currentTimeMillis() - startTime;
-        int status = wrapper.getStatus();
-        
-        // 根据响应状态决定记录内容
-        String content = status != 200 ? 
-                status + " 错误" : new String(wrapper.getContentAsByteArray());
-
-        log.info("请求处理耗时: {}ms | 响应结果: {}", time, content);
-    }
-
-    /**
-     * 记录请求开始时的详细日志信息
-     * 包含请求的完整信息：URL、方法、IP地址、用户身份、角色权限、请求参数等
-     * 
-     * 功能特点：
-     * - 生成唯一请求ID并存入MDC，实现请求链路追踪
-     * - 提取并格式化请求参数（取数组第一个值）
-     * - 区分已认证和未认证用户，记录不同级别的身份信息
-     * - 使用IpUtils获取真实客户端IP（支持反向代理）
-     * 
-     * @param request HTTP请求对象
-     */
-    public void logRequestStart(HttpServletRequest request){
+    public void logRequest(ContentCachingRequestWrapper requestWrapper, ContentCachingResponseWrapper responseWrapper, long startTime){
         // 生成唯一请求ID并存入MDC上下文
         long reqId = generator.nextId();
         MDC.put("reqId", String.valueOf(reqId));
         
+        // 计算请求处理耗时
+        long time = System.currentTimeMillis() - startTime;
+        int status = responseWrapper.getStatus();
+        
         // 提取并格式化请求参数
-        JSONObject object = new JSONObject();
-        request.getParameterMap().forEach((k, v) -> object.put(k, v.length > 0 ? v[0] : null));
-        Integer userId = (Integer)request.getAttribute(Const.ATTR_USER_ID);
-
-        if(userId != null) {
-            log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 用户ID: {} | 请求参数列表: {}",
-                    request.getServletPath(), request.getMethod(), IpUtils.getRealClientIp(request),
-                    userId, object);
-        } else {
-            // 未认证用户：记录基础请求信息
-            log.info("请求URL: \"{}\" ({}) | 远程IP地址: {} │ 身份: 未验证 | 请求参数列表: {}",
-                    request.getServletPath(), request.getMethod(), IpUtils.getRealClientIp(request), object);
+        JSONObject params = new JSONObject();
+        
+        // 获取URL查询参数
+        requestWrapper.getParameterMap().forEach((k, v) -> params.put(k, v.length > 0 ? v[0] : null));
+        
+        // 获取POST请求体数据
+        String requestBody = this.getRequestBody(requestWrapper);
+        if (requestBody != null && !requestBody.trim().isEmpty()) {
+            params.put("requestBody", requestBody);
         }
+        
+        Integer userId = (Integer)requestWrapper.getAttribute(Const.ATTR_USER_ID);
+        
+        // 构建完整日志信息
+        StringBuilder logBuilder = new StringBuilder();
+        logBuilder.append("请求处理 | ");
+        logBuilder.append("URL: \"").append(requestWrapper.getServletPath()).append("\" (").append(requestWrapper.getMethod()).append(") | ");
+        logBuilder.append("IP: ").append(IpUtils.getRealClientIp(requestWrapper)).append(" | ");
+        
+        if(userId != null) {
+            logBuilder.append("用户ID: ").append(userId).append(" | ");
+        } else {
+            logBuilder.append("身份: 未验证 | ");
+        }
+        
+        logBuilder.append("参数: ").append(params).append(" | ");
+        logBuilder.append("耗时: ").append(time).append("ms | ");
+        logBuilder.append("状态码: ").append(status);
+        
+        // 根据响应状态决定日志级别
+        if(status != 200) {
+            logBuilder.append(" | 响应: 错误状态");
+            log.warn(logBuilder.toString());
+        } else {
+            String content = new String(responseWrapper.getContentAsByteArray());
+            logBuilder.append(" | 响应: ").append(content);
+            log.info(logBuilder.toString());
+        }
+        
+        // 清理MDC上下文
+        MDC.clear();
         //TODO : 整体代码修复添加新IP工具类， 用来适配部署服务器后Nginx反代导致IP错误的问题，本工具类没有测试临时添加TODO
+    }
+    
+    /**
+     * 获取POST请求体内容
+     * 从ContentCachingRequestWrapper中读取缓存的请求体数据
+     * 
+     * @param request 请求包装器
+     * @return 请求体字符串，如果无内容则返回null
+     */
+    private String getRequestBody(ContentCachingRequestWrapper request) {
+        byte[] content = request.getContentAsByteArray();
+        if (content.length > 0) {
+            return new String(content, StandardCharsets.UTF_8);
+        }
+        return null;
     }
 }

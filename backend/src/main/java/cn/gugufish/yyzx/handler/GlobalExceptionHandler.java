@@ -19,14 +19,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SignatureException.class)
     @ResponseBody
     public ResultVo<String> handleSignatureException(SignatureException e) {
-        log.error("token的非法操作" + e.getMessage());
+        log.error("token的非法操作{}", e.getMessage());
         return ResultVo.fail("token的非法操作，请自重", "token_error");
     }
 
     @ExceptionHandler(MalformedJwtException.class)
     @ResponseBody
     public ResultVo<String> handleMalformedJwtException(MalformedJwtException e) {
-        log.error("token解析异常" + e.getMessage());
+        log.error("token解析异常{}", e.getMessage());
         return ResultVo.fail("token解析异常", "token_error");
     }
 
@@ -39,14 +39,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     @ResponseBody
     public ResultVo<String> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        log.error("不支持的媒体类型: " + e.getMessage());
+        log.error("不支持的媒体类型: {}", e.getMessage());
         return ResultVo.fail("请求格式错误，请使用正确的Content-Type", "media_type_error");
     }
 
     @ExceptionHandler(NullPointerException.class)
     @ResponseBody
     public ResultVo<String> handleNullPointerException(NullPointerException e) {
-        log.error("发生空指针异常" + e);
+        log.error("发生空指针异常{}", String.valueOf(e));
         return ResultVo.fail("系统内部错误: 空指针异常", "system_error");
     }
 
