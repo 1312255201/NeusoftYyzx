@@ -61,6 +61,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/v3/api-docs", 
             "/images",
             "/user/login",
+            "/ai",
             "/favicon.ico"
     );
 

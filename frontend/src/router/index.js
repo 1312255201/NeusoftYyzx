@@ -62,6 +62,14 @@ function initRouter() {
 	});
 
 	appendRoute.children.push({
+		path: "/ai/AiChat",
+		component: () => import('@/views/ai/AIChat.vue'),
+		meta: {
+			title: "AI聊天"
+		}
+	});
+
+	appendRoute.children.push({
 		path: "/health/userToCustomerService",
 		component: () => import('@/views/health/UserToCustomerService.vue'),
 		meta: {

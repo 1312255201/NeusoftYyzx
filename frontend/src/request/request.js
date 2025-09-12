@@ -73,6 +73,9 @@ const JSON_APIS = [
 	'/beddetails/updateBedDetails',
 	'/beddetails/exchangeBed',
 
+	// AI聊天相关API
+	'/ai/chat',
+
 ];
 
 /**

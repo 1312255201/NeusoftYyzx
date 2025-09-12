@@ -84,19 +84,4 @@ public class RedisTokenBlacklistUtil {
         }
     }
 
-    /**
-     * 从黑名单中移除token（一般不需要主动调用，Redis会自动过期）
-     * 
-     * @param token JWT token
-     * @return 是否移除成功
-     */
-    public boolean removeFromBlacklist(String token) {
-        try {
-            String blacklistKey = Const.REDIS_TOKEN_BLACKLIST_PREFIX + token;
-            return Boolean.TRUE.equals(stringRedisTemplate.delete(blacklistKey));
-        } catch (Exception e) {
-            log.error("从黑名单移除token失败: {}", e.getMessage());
-            return false;
-        }
-    }
 }

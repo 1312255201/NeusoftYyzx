@@ -55,7 +55,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
      * - /v3/api-docs: OpenAPI文档接口
      * - /images: 图片静态资源
      */
-    private final Set<String> ignores = Set.of("/swagger-ui", "/v3/api-docs" , "/images");
+    private final Set<String> ignores = Set.of("/swagger-ui", "/v3/api-docs" , "/images", "/ai");
 
     /**
      * 核心过滤方法
@@ -117,41 +117,32 @@ public class RequestLogFilter extends OncePerRequestFilter {
         // 生成唯一请求ID并存入MDC上下文
         long reqId = generator.nextId();
         MDC.put("reqId", String.valueOf(reqId));
-        
         // 计算请求处理耗时
         long time = System.currentTimeMillis() - startTime;
         int status = responseWrapper.getStatus();
-        
         // 提取并格式化请求参数
         JSONObject params = new JSONObject();
-        
         // 获取URL查询参数
         requestWrapper.getParameterMap().forEach((k, v) -> params.put(k, v.length > 0 ? v[0] : null));
-        
-        // 获取POST请求体数据
+        // 获取请求体数据
         String requestBody = this.getRequestBody(requestWrapper);
         if (requestBody != null && !requestBody.trim().isEmpty()) {
             params.put("requestBody", requestBody);
         }
-        
         Integer userId = (Integer)requestWrapper.getAttribute(Const.ATTR_USER_ID);
-        
         // 构建完整日志信息
         StringBuilder logBuilder = new StringBuilder();
         logBuilder.append("请求处理 | ");
         logBuilder.append("URL: \"").append(requestWrapper.getServletPath()).append("\" (").append(requestWrapper.getMethod()).append(") | ");
         logBuilder.append("IP: ").append(IpUtils.getRealClientIp(requestWrapper)).append(" | ");
-        
         if(userId != null) {
             logBuilder.append("用户ID: ").append(userId).append(" | ");
         } else {
             logBuilder.append("身份: 未验证 | ");
         }
-        
         logBuilder.append("参数: ").append(params).append(" | ");
         logBuilder.append("耗时: ").append(time).append("ms | ");
         logBuilder.append("状态码: ").append(status);
-        
         // 根据响应状态决定日志级别
         if(status != 200) {
             logBuilder.append(" | 响应: 错误状态");
