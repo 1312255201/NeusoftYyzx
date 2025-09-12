@@ -87,8 +87,11 @@ http.interceptors.request.use(config => {
 
 	// 处理POST请求的Content-Type
 	if (config.method === 'post') {
-		// 根据API路径决定使用JSON还是表单格式
-		if (shouldUseJson(config.url)) {
+		// 如果已经设置了Content-Type为multipart/form-data，则不进行处理
+		if (config.headers['Content-Type'] === 'multipart/form-data') {
+			// FormData请求，保持原有的Content-Type
+			console.log('使用FormData格式请求:', config.url);
+		} else if (shouldUseJson(config.url)) {
 			// JSON格式请求
 			config.headers['Content-Type'] = 'application/json';
 			// axios默认会将data对象转换为JSON字符串

@@ -45,7 +45,7 @@
 			</table>
 		</div>
 		<div class="map">
-			<table border="1px" cellspacing="20px" style=" border-collapse: collapse; width:1200px">
+			<table border="1px" cellspacing="20px" style=" border-collapse: collapse; width:100%">
 				<tbody>
 					<tr class="cwsyt_thead">
 						<td v-for="(item,index) in listRoom" :key="item.roomNo" v-show="index <1 ">{{item.roomNo}}</td>
@@ -64,13 +64,12 @@
 						<td v-for="(item,index) in listRoom" :key="item.roomNo" v-show="index <6 ">
 							<a href="javascript:void(0)" v-for="bedItem in item.bedList" :key="bedItem.bedNo">
 								<div>
-									<img v-if="bedItem.bedStatus==1" src="@/assets/bed/kx.png" />
-									<img v-if="bedItem.bedStatus==2" src="@/assets/bed/yr.png" />
-									<img v-if="bedItem.bedStatus==3" src="@/assets/bed/wc.png" />
+									<img v-if="bedItem.bedStatus===1" src="@/assets/bed/kx.png" />
+									<img v-if="bedItem.bedStatus===2" src="@/assets/bed/yr.png" />
+									<img v-if="bedItem.bedStatus===3" src="@/assets/bed/wc.png" />
 								</div>{{bedItem.bedNo}}
 							</a>
 						</td>
-
 					</tr>
 					<tr></tr>
 					<tr class="cwsyt_thead">
@@ -289,31 +288,11 @@
 		/* 黄色 - 外出 */
 	}
 
-	/* 特殊区域样式 */
-	.elevator {
-		background-color: #AEEEEE;
-	}
-
-	.laundry {
-		background-color: #9AC0CD;
-	}
-
-	.activity {
-		background-color: #4EEE94;
-	}
-
-	.corridor {
-		background-color: #CDAA7D;
-	}
 
 	/* 响应式设计 - 调整小屏幕处理方式 */
 	@media (max-width: 1200px) {
 		.map {
 			overflow-x: auto;
-		}
-
-		.bed-map {
-			min-width: 1000px;
 		}
 
 		.query {
@@ -326,10 +305,6 @@
 			/* 调整单元格内边距 */
 		}
 
-		.bed-stat {
-			margin-right: 15px;
-			/* 小屏幕减少间距 */
-		}
 	}
 
 	@media (max-width: 800px) {

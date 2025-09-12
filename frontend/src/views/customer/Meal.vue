@@ -341,7 +341,13 @@
 				this.loadMealData();
 			},
 			foodFullImg(foodImg) {
-				return require('@/assets/food/' + foodImg);
+				if (!foodImg) return '';
+				// 如果已经是完整URL，直接返回
+				if (foodImg.startsWith('http')) {
+					return foodImg;
+				}
+				// 否则拼接MinIO服务器地址
+				return `http://localhost:9999/yyzx/images/cache/${foodImg}`;
 			},
 			handleImageError(event, meal) {
 				this.imageErrors[meal.id] = true;

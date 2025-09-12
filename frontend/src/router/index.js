@@ -77,6 +77,14 @@ function initRouter() {
 		}
 	});
 
+	appendRoute.children.push({
+		path: "/food/listFood",
+		component: () => import('@/views/food/ListFood.vue'),
+		meta: {
+			title: "食物管理"
+		}
+	});
+
 	// 调用setMenu action并传递正确的菜单数据
 	// 假设menus是从服务器获取的菜单数据
 	if (menus && menus.length > 0) {

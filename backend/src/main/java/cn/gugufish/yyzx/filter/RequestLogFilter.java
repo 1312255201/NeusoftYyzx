@@ -53,7 +53,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
      * - /v3/api-docs: OpenAPI文档接口
      * - /images: 图片静态资源
      */
-    private final Set<String> ignores = Set.of("/swagger-ui", "/v3/api-docs");
+    private final Set<String> ignores = Set.of("/swagger-ui", "/v3/api-docs" , "/images");
 
     /**
      * 核心过滤方法

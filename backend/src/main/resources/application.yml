@@ -8,6 +8,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+  minio:
+    endpoint: 'http://localhost:9000'
+    username: 'adminadmin'
+    password: 'adminadmin'
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

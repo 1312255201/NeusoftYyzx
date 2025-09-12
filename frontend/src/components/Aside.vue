@@ -87,9 +87,4 @@
 		color: #fff;
 	}
 
-	#asideNav .el-menu {
-		/* font-weight: 550; */
-		flex: 1;
-		border-right: none;
-	}
 </style>
