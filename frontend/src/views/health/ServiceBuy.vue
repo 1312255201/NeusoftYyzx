@@ -425,10 +425,8 @@
 	.el-header {
 		padding: 15px 20px;
 		height: auto !important;
-		background-color: var(--card-bg-color);
-		box-shadow: var(--box-shadow-light);
-		color: var(--text-color-primary);
-		transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+		background-color: #f8f9fa;
+		box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 	}
 
 	.header-container {
@@ -462,22 +460,20 @@
 
 	/* 卡片容器样式 */
 	.card-container {
-		background-color: var(--card-bg-color);
+		background-color: #fff;
 		border-radius: 8px;
-		box-shadow: var(--box-shadow-light);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 		margin-bottom: 20px;
 		overflow: hidden;
-		transition: background-color 0.3s ease, box-shadow 0.3s ease;
 	}
 
 	.card-header {
 		height: 50px;
-		background-color: var(--primary-color);
+		background-color: #3ca2e0;
 		color: #fff;
 		font-size: 16px;
 		line-height: 50px;
 		padding: 0 20px;
-		transition: background-color 0.3s ease;
 	}
 
 	.card-title {
@@ -501,9 +497,7 @@
 		padding: 15px;
 		flex: 1;
 		overflow: auto;
-		background-color: var(--bg-color-page);
-		color: var(--text-color-primary);
-		transition: background-color 0.3s ease, color 0.3s ease;
+		background-color: #f5f7fa;
 	}
 
 	.el-button {
@@ -545,22 +539,17 @@
 		margin-top: 15px;
 		border-radius: 4px;
 		overflow: hidden;
-		box-shadow: var(--box-shadow-light);
-		background-color: var(--card-bg-color);
-		color: var(--text-color-primary);
-		transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	}
 
 	.el-table th {
-		background-color: var(--table-header-bg-color);
-		color: var(--text-color-primary);
+		background-color: #f5f7fa;
+		color: #606266;
 		font-weight: 500;
-		transition: background-color 0.3s ease, color 0.3s ease;
 	}
 
 	.el-table__row:hover>td {
-		background-color: var(--table-row-hover-bg-color) !important;
-		transition: background-color 0.3s ease;
+		background-color: #ecf5ff !important;
 	}
 
 	/* 分页样式 */
@@ -573,9 +562,8 @@
 	.empty-data {
 		text-align: center;
 		padding: 80px 0;
-		color: var(--text-color-secondary);
+		color: #909399;
 		font-size: 14px;
-		transition: color 0.3s ease;
 	}
 
 	/* 按钮组样式 */

@@ -4,29 +4,14 @@
 			<img style="width:200px;height:40px;margin:20px 0 0 -12px" src="@/assets/welcome.png" />
 		</div>
 
-		<div class="header-right">
-			<!-- 主题切换按钮 -->
-			<el-tooltip :content="isDarkMode ? '切换到亮色模式' : '切换到暗色模式'" placement="bottom">
-				<el-button 
-					@click="toggleTheme" 
-					type="text" 
-					class="theme-toggle-btn"
-					:icon="isDarkMode ? 'Sunny' : 'Moon'"
-					size="large"
-				>
-				</el-button>
-			</el-tooltip>
-			
-			<!-- 用户下拉菜单 -->
-			<el-dropdown split-button type="default">
-				{{user.nickname}}
-				<template #dropdown>
-					<el-dropdown-menu>
-						<el-dropdown-item @click="logout">注销</el-dropdown-item>
-					</el-dropdown-menu>
-				</template>
-			</el-dropdown>
-		</div>
+		<el-dropdown split-button type="default">
+			{{user.nickname}}
+			<template #dropdown>
+				<el-dropdown-menu>
+					<el-dropdown-item @click="logout">注销</el-dropdown-item>
+				</el-dropdown-menu>
+			</template>
+		</el-dropdown>
 
 	</el-header>
 </template>
@@ -46,15 +31,7 @@
 				user: getSessionStorage('user')
 			}
 		},
-		computed: {
-			isDarkMode() {
-				return this.$store.getters.isDarkMode
-			}
-		},
 		methods: {
-			toggleTheme() {
-				this.$store.dispatch('toggleTheme')
-			},
 			logout() {
 				const token = sessionStorage.getItem('token')
 				
@@ -97,46 +74,13 @@
 	#header {
 		max-height: 50px;
 		line-height: 50px;
+
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 0 20px;
-		background-color: var(--header-bg-color, #ffffff);
-		border-bottom: 1px solid var(--border-color, #e4e7ed);
-		transition: all 0.3s ease;
 	}
 
 	#header>h2 {
 		color: #0b67b8;
-	}
-
-	.header-right {
-		display: flex;
-		align-items: center;
-		gap: 15px;
-	}
-
-	.theme-toggle-btn {
-		width: 40px;
-		height: 40px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all 0.3s ease;
-		color: var(--text-color, #606266);
-		background-color: var(--button-bg-color, #f5f7fa);
-		border: 1px solid var(--border-color, #dcdfe6);
-	}
-
-	.theme-toggle-btn:hover {
-		color: var(--primary-color, #409eff);
-		background-color: var(--button-hover-bg-color, #ecf5ff);
-		border-color: var(--primary-color, #409eff);
-		transform: scale(1.1);
-	}
-
-	.theme-toggle-btn:active {
-		transform: scale(0.95);
 	}
 </style>

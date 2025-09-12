@@ -417,9 +417,7 @@
 		padding: 15px;
 		flex: 1;
 		overflow: auto;
-		background-color: var(--bg-color-page);
-		color: var(--text-color-primary);
-		transition: background-color 0.3s ease, color 0.3s ease;
+		background-color: #f5f7fa;
 	}
 
 	.main-content {
@@ -433,23 +431,21 @@
 	/* 卡片容器样式 */
 	.card-container {
 		width: 100%;
-		background-color: var(--card-bg-color);
+		background-color: #fff;
 		border-radius: 8px;
-		box-shadow: var(--box-shadow-light);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
-		transition: background-color 0.3s ease, box-shadow 0.3s ease;
 	}
 
 	.card-header {
 		height: 50px;
-		background-color: var(--primary-color);
+		background-color: #3ca2e0;
 		color: #fff;
 		font-size: 16px;
 		line-height: 50px;
 		padding: 0 20px;
-		transition: background-color 0.3s ease;
 	}
 
 	.card-title {
@@ -463,20 +459,16 @@
 		border-radius: 4px;
 		overflow: hidden;
 		flex: 1;
-		background-color: var(--card-bg-color);
-		color: var(--text-color-primary);
-		transition: background-color 0.3s ease, color 0.3s ease;
 	}
 
 	.el-table th {
-		background-color: var(--table-header-bg-color);
-		color: var(--text-color-primary);
+		background-color: #f5f7fa;
+		color: #606266;
 		font-weight: 500;
-		transition: background-color 0.3s ease, color 0.3s ease;
 	}
 
 	.el-table__row:hover>td {
-		background-color: var(--table-row-hover-bg-color) !important;
+		background-color: #ecf5ff !important;
 		transition: background-color 0.3s ease;
 	}
 
@@ -529,8 +521,7 @@
 	.empty-data {
 		text-align: center;
 		padding: 50px 0;
-		color: var(--text-color-secondary);
-		transition: color 0.3s ease;
+		color: #909399;
 	}
 
 	/* 响应式样式 */

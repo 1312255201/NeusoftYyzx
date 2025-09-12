@@ -141,16 +141,14 @@
 
 	/* 查询区域样式 */
 	.query {
-		background-color: var(--card-bg-color);
-		color: var(--text-color-primary);
+		background-color: #fff;
 		border-radius: 8px;
-		box-shadow: var(--box-shadow-light);
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 		padding: 15px 20px;
 		margin-bottom: 20px;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 	}
 
 	.query-table {
@@ -200,13 +198,11 @@
 
 	/* 地图区域样式 */
 	.map {
-		background-color: var(--card-bg-color);
-		color: var(--text-color-primary);
+		background-color: #fff;
 		border-radius: 8px;
-		box-shadow: var(--box-shadow-light);
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 		padding: 20px;
 		overflow-x: auto;
-		transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 	}
 
 	/* 表格样式优化 */
@@ -370,41 +366,11 @@
 		vertical-align: middle;
 		/* 垂直居中对齐 */
 		padding: 0 20px;
-		color: var(--text-color-primary);
-		transition: color 0.3s ease;
 		/* 单元格左右内边距，增加列间距 */
 	}
 
 	.query-table tr {
 		height: 50px;
 		/* 统一行高，使布局更整齐 */
-	}
-
-	/* 表格暗色主题支持 */
-	table {
-		color: var(--text-color-primary);
-		transition: color 0.3s ease;
-	}
-
-	table td {
-		border-color: var(--border-color);
-		transition: border-color 0.3s ease;
-	}
-
-	/* 暗色主题下的特殊区域颜色调整 */
-	[data-theme='dark'] .elevator {
-		background-color: #2d3748 !important;
-	}
-
-	[data-theme='dark'] .laundry {
-		background-color: #2a4365 !important;
-	}
-
-	[data-theme='dark'] .activity {
-		background-color: #22543d !important;
-	}
-
-	[data-theme='dark'] .corridor {
-		background-color: #744210 !important;
 	}
 </style>

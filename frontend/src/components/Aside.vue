@@ -4,10 +4,7 @@
 			<p>东软颐养中心</p>
 			<img src="../assets/logo.png" class="logo-png" />
 		</div>
-		<el-menu :active-text-color="$store.getters.isDarkMode ? '#409eff' : '#ffd04b'" 
-			:background-color="$store.getters.isDarkMode ? 'var(--aside-bg-color)' : '#3CA2E0'" 
-			:default-active="$route.path" 
-			:text-color="$store.getters.isDarkMode ? 'var(--text-color-primary)' : '#fff'"
+		<el-menu active-text-color="#ffd04b" background-color="#3CA2E0" :default-active="$route.path" text-color="#fff"
 			:router="true" unique-opened>
 			<template v-for="menu in $store.getters.menus">
 				<el-sub-menu :index="menu.menusIndex">
@@ -66,15 +63,12 @@
 	#asideNav {
 		display: flex;
 		flex-direction: column;
-		background-color: var(--aside-bg-color);
-		transition: background-color 0.3s ease;
 	}
 
 	#asideNav .logo-name {
 		width: 100%;
 		height: 150px;
-		background-color: var(--aside-bg-color);
-		transition: background-color 0.3s ease;
+		background-color: #3CA2E0;
 	}
 
 	#asideNav .logo-name .logo-png {
@@ -97,51 +91,5 @@
 		/* font-weight: 550; */
 		flex: 1;
 		border-right: none;
-		background-color: var(--aside-bg-color) !important;
-		transition: background-color 0.3s ease;
-	}
-
-	/* 菜单项样式优化 */
-	:deep(.el-menu-item) {
-		transition: color 0.3s ease, background-color 0.3s ease;
-	}
-
-	:deep(.el-menu-item:hover) {
-		background-color: rgba(255, 255, 255, 0.1) !important;
-	}
-
-	:deep(.el-menu-item.is-active) {
-		background-color: rgba(255, 255, 255, 0.2) !important;
-	}
-
-	:deep(.el-sub-menu__title) {
-		transition: color 0.3s ease, background-color 0.3s ease;
-	}
-
-	:deep(.el-sub-menu__title:hover) {
-		background-color: rgba(255, 255, 255, 0.1) !important;
-	}
-
-	:deep(.el-sub-menu.is-active .el-sub-menu__title) {
-		background-color: rgba(255, 255, 255, 0.2) !important;
-	}
-
-	/* 暗色主题下的特殊处理 */
-	[data-theme='dark'] :deep(.el-menu-item:hover) {
-		background-color: var(--button-hover-bg-color) !important;
-	}
-
-	[data-theme='dark'] :deep(.el-menu-item.is-active) {
-		background-color: var(--primary-color) !important;
-		color: #ffffff !important;
-	}
-
-	[data-theme='dark'] :deep(.el-sub-menu__title:hover) {
-		background-color: var(--button-hover-bg-color) !important;
-	}
-
-	[data-theme='dark'] :deep(.el-sub-menu.is-active .el-sub-menu__title) {
-		background-color: var(--primary-color) !important;
-		color: #ffffff !important;
 	}
 </style>
