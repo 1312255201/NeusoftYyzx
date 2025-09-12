@@ -8,7 +8,7 @@ import router from '../router'; // 用于处理token失效时的路由跳转
  */
 const http = axios.create({
 	baseURL: 'http://localhost:9999/yyzx',
-	timeout: 10000 // 请求超时时间
+	timeout: 30000 // 请求超时时间（30秒）
 });
 
 /**
