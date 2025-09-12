@@ -1,5 +1,10 @@
 package cn.gugufish.yyzx.service.impl;
 
+import cn.gugufish.yyzx.mapper.BedMapper;
+import cn.gugufish.yyzx.pojo.Bed;
+import cn.gugufish.yyzx.pojo.Customer;
+import cn.gugufish.yyzx.service.BedService;
+import cn.gugufish.yyzx.service.CustomerService;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,7 +23,10 @@ import jakarta.annotation.Resource;
 public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> implements OutwardService {
     @Resource
     private OutwardMapper outwardMapper;
-
+    @Resource
+    BedService bedService;
+    @Resource
+    CustomerService customerService;
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ResultVo<Void> examineOutward(Outward outward) throws Exception {
@@ -26,6 +34,11 @@ public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> impl
         updateWrapper.eq("id", outward.getId());
         updateWrapper.set("auditstatus", outward.getAuditstatus());
         outwardMapper.update(outward, updateWrapper);
+        Customer cs = customerService.getById(outward.getCustomerId());
+        Bed bed = new Bed();
+        bed.setId(cs.getBedId());
+        bed.setBedStatus(3);
+        bedService.updateById(bed);
         return ResultVo.ok("审批成功");
     }
 
@@ -48,16 +61,13 @@ public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> impl
         }
 
         // 3. 处理userId参数
+        Integer userId = outwardDTO.getUserId();
         Integer customerId= outwardDTO.getCustomerId();
-        if (customerId == null) {
-            return ResultVo.fail("客户编号不能为空");
-        }
-
         // 4. 创建分页对象
         Page<OutwardVo> page = new Page<>(pageNum, pageSize);
 
         // 5. 调用Mapper方法
-        outwardMapper.selectOutwardVo(page, customerId);
+        outwardMapper.selectOutwardVo(page, customerId,userId);
 
         return ResultVo.ok(page);
     }

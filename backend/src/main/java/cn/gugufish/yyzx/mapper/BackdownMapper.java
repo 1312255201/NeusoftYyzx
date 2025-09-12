@@ -40,6 +40,9 @@ public interface BackdownMapper extends BaseMapper<Backdown> {
             "<if test='customerId != null and customerId != \"\"'>" +
             "AND bdn.customer_id = #{customerId}" +
             "</if>" +
+            "<if test='userId != null and userId != \"\"'>" +
+            "AND u.id = #{userId}" +
+            "</if>" +
             "</script>")
-    Page<BackdownVo> selectBackdownVo(@Param("page") Page<BackdownVo> page, @Param("customerId") Integer customerId);
+    Page<BackdownVo> selectBackdownVo(@Param("page") Page<BackdownVo> page, @Param("customerId") Integer customerId,@Param("userId") Integer userId);
 }

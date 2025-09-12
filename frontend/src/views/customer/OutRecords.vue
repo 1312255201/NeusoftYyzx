@@ -81,14 +81,14 @@
 									width="40" />
 								<el-table-column align="center" prop="customerName" label="客户名称" width="100" />
 								<el-table-column align="center" prop="outgoingReason" label="外出事由" width="100" />
-								<el-table-column align="center" prop="outgoingTime" label="外出时间" width="70">
-									<template #default="{row}">
-										{{ row.outgoingTime ? new Date(row.outgoingTime).toLocaleDateString('zh-CN') : '' }}
-									</template>
-								</el-table-column>
-								<el-table-column align="center" prop="expectedreTurntime" label="预计回院时间" width="100">
-									<template #default="{row}">
-										{{ row.expectedreTurntime ? new Date(row.expectedreTurntime).toLocaleDateString('zh-CN') : '' }}
+						<el-table-column align="center" prop="outgoingTime" label="外出时间" width="70">
+							<template #default="{row}">
+								{{ row.outgoingTime ? new Date(row.outgoingTime).toLocaleDateString('zh-CN') : '' }}
+							</template>
+						</el-table-column>
+						<el-table-column align="center" prop="expectedreTurntime" label="预计回院时间" width="100">
+							<template #default="{row}">
+								{{ row.expectedreTurntime ? new Date(row.expectedreTurntime).toLocaleDateString('zh-CN') : '' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" prop="actualreTurntime" label="实际回院时间" width="100">
@@ -106,14 +106,14 @@
 								</el-table-column>
 								<el-table-column align="center" prop="auditStatus" label="审批状态" width="100">
 									<template #default="{row}">
-										{{ row.auditStatus === 0 ? '待审批' : row.auditStatus === 1 ? '已通过' : row.auditstatus === 2 ? '已拒绝' : '未知状态' }}
+										{{ row.auditStatus === 0 ? '待审批' : row.auditStatus === 1 ? '已通过' : row.auditStatus === 2 ? '已拒绝' : '未知状态' }}
 									</template>
 								</el-table-column>
 								<el-table-column align="center" label="操作" width="100">
 									<template #default="scope">
 										<el-button v-if="scope.row.auditStatus === 1 && dialog.item.roleId === 2"
-											:disabled="scope.row.actualreturntime" type="success" size="small" round
-											plain @click="updateTime(scope.row.id)">登记回院时间</el-button>
+								:disabled="scope.row.actualreTurntime" type="success" size="small" round
+								plain @click="updateTime(scope.row.id)">登记回院时间</el-button>
 										<el-button v-if="scope.row.auditStatus === 0 && dialog.item.roleId === 2"
 											type="danger" size="small" round plain
 											@click="del(scope.row.id)">撤销申请</el-button>
@@ -162,8 +162,8 @@
 			<el-divider border-style="double" style="margin:0;" />
 			<el-form label-position="right" label-width="auto" style="max-width:380px;margin:20px auto"
 				class="demo-form-inline" ref="itemExamineForm" :model="dialog.item" :rules="rules">
-				<el-form-item label="审批：" prop="auditstatus">
-					<el-radio-group v-model="dialog.item.auditstatus" class="ml-4">
+				<el-form-item label="审批：" prop="auditStatus">
+					<el-radio-group v-model="dialog.item.auditStatus" class="ml-4">
 						<el-radio label="1">同意</el-radio>
 						<el-radio label="2">拒绝</el-radio>
 					</el-radio-group>
@@ -264,18 +264,18 @@
 					dialogExamineVisible: false, // 审批对话框状态
 					tops: "", // 模态框标题
 					item: {
-						id: "",
-						username: "",
-						customerName: "",
-						checkinDate: "",
-						outgoingreason: "",
-						outgoingtime: "",
-						expectedreturntime: "",
-						actualreturntime: "",
-						escorted: "",
-						relation: "",
-						escortedtel: "",
-						auditstatus: 0,
+					id: "",
+					username: "",
+					customerName: "",
+					checkinDate: "",
+            		outgoingreason: "", 
+					outgoingtime: "", 
+					expectedreturntime: "", 
+					actualreturntime: "", 
+					escorted: "",
+					relation: "",
+					escortedtel: "",
+						auditStatus: 0,
 						bedId: "",
 						roleId: "",
 						backTimeId: ""
@@ -329,37 +329,37 @@
 						message: "请选择客户",
 						trigger: "change"
 					}],
-					outgoingreason: [{
+          outgoingreason: [{
 						required: true,
 						message: "请输入外出事由",
 						trigger: "blur"
 					}],
-					outgoingtime: [{
-						required: true,
-						message: "请选择外出时间",
-						trigger: "change"
-					}],
-					expectedreturntime: [{
-						required: true,
-						message: "请选择预计回院时间",
-						trigger: "change"
-					}],
+          outgoingtime: [{
+					required: true,
+					message: "请选择外出时间",
+					trigger: "change"
+				}],
+          expectedreturntime: [{
+					required: true,
+					message: "请选择预计回院时间",
+					trigger: "change"
+				}],
 					escorted: [{
 						required: true,
 						message: "请输入陪同人",
 						trigger: "blur"
 					}],
 					escortedtel: [{
-						required: true,
-						message: "请输入陪同人电话",
-						trigger: "blur"
-					}],
+					required: true,
+					message: "请输入陪同人电话",
+					trigger: "blur"
+				}],
 					actualreturntime: [{
-						required: true,
-						message: "请选择实际回院时间",
-						trigger: "change"
-					}],
-					auditstatus: [{
+					required: true,
+					message: "请选择实际回院时间",
+					trigger: "change"
+				}],
+					auditStatus: [{
 						required: true,
 						message: "请选择审批状态",
 						trigger: "change"
@@ -432,13 +432,28 @@
 			queryOutwardVo() {
 				console.log('查询外出记录参数:', this.conditionRecord); // 添加日志以便调试
 				queryOutwardVo(this.conditionRecord).then(res => {
-					this.outwardList = res.data.records;
-					this.pageRecord.total = res.data.total; // 总记录数
-					this.pageRecord.pageSize = this.conditionRecord.pageSize; // 保持设置的pageSize
-					this.pageRecord.currentPage = res.data.current; // 当前页码
-					this.pageRecord.pagCount = res.data.pages; // 总页数
+					// 检查返回数据的有效性
+					if (res && res.flag && res.data) {
+						this.outwardList = res.data.records || [];
+						this.pageRecord.total = res.data.total || 0; // 总记录数
+						this.pageRecord.pageSize = this.conditionRecord.pageSize; // 保持设置的pageSize
+						this.pageRecord.currentPage = res.data.current || 1; // 当前页码
+						this.pageRecord.pagCount = res.data.pages || 0; // 总页数
+					} else {
+						// 处理后端返回的错误信息
+						this.outwardList = [];
+						this.pageRecord.total = 0;
+						this.pageRecord.currentPage = 1;
+						this.pageRecord.pagCount = 0;
+						
+						// 显示后端返回的具体错误信息
+						const errorMessage = res && res.message ? res.message : '获取外出记录失败';
+						this.$message.warning(errorMessage);
+					}
 				}).catch(error => {
 					console.error('获取外出记录失败:', error);
+					this.outwardList = [];
+					this.pageRecord.total = 0;
 					this.$message.error('获取外出记录失败，请检查网络连接');
 				});
 			},
@@ -462,7 +477,7 @@
 			},
 
 			// 打开修改回院时间对话框
-			updateTime(id) {
+      updateTime(id) {
 				this.dialog.tops = "修改实际回院时间";
 				this.dialog.dialogTimeVisible = true;
 				this.dialog.item.backTimeId = id;
@@ -508,8 +523,8 @@
 			examineOutward(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						this.dialog.item.audittime = getCurDate();
-						this.dialog.item.auditperson = getSessionStorage('user').id;
+						this.dialog.item.auditTime = getCurDate();
+						this.dialog.item.auditPerson = getSessionStorage('user').id;
 						examineOutward(this.dialog.item).then(res => {
 							if (res.flag) {
 								this.$message.success(res.message);
@@ -533,8 +548,14 @@
 			updateBackTime(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						this.dialog.item.id = this.dialog.item.backTimeId;
-						updateBackTime(this.dialog.item).then(res => {
+						// 构造后端期望的参数格式
+						const params = {
+							id: this.dialog.item.backTimeId,
+							actualreturntime: this.dialog.item.actualreturntime, // 注意字段名匹配
+							customerId: this.conditionRecord.customerId // 添加必需的 customerId
+						};
+						console.log('更新回院时间参数:', params); // 添加日志以便调试
+						updateBackTime(params).then(res => {
 							if (res.flag) {
 								this.$message.success(res.message);
 								// 刷新数据表格
@@ -558,12 +579,22 @@
 				this.$refs[formName].validate(valid => {
 					if (valid) {
 						// 通过id判断是添加还是编辑
-						if (this.dialog.item.id == null || this.dialog.item.id == "") {
-							this.dialog.item.createTime = getCurDate();
-							this.dialog.item.createBy = getSessionStorage("user").id;
-							this.dialog.item.roleId = 2;
-							this.dialog.item.isDeleted = 0;
-							addOutward(this.dialog.item).then(res => {
+					if (this.dialog.item.id == null || this.dialog.item.id === "") {
+						// 构造后端期望的参数格式（字段名转换为全小写）
+						const submitData = {
+							customerId: this.dialog.item.customerId,
+							outgoingreason: this.dialog.item.outgoingreason,
+							outgoingtime: this.dialog.item.outgoingtime,
+							expectedreturntime: this.dialog.item.expectedreturntime,
+							escorted: this.dialog.item.escorted,
+							relation: this.dialog.item.relation,
+							escortedtel: this.dialog.item.escortedtel,
+							createTime: getCurDate(),
+							createBy: getSessionStorage("user").id,
+							roleId: 2,
+							isDeleted: 0
+						};
+						addOutward(submitData).then(res => {
 								if (res.flag) {
 									this.$message.success(res.message);
 									// 刷新数据表格
@@ -612,6 +643,7 @@
 		},
 		mounted() {
 			this.roleId = getSessionStorage('user').roleId;
+			this.dialog.item.roleId = this.roleId; // 初始化 dialog.item.roleId
 			this.condition.userId = this.roleId === 1 ? '' : getSessionStorage('user').id;
 			this.conditionRecord.userId = this.roleId === 1 ? '' : getSessionStorage('user').id;
 			this.listKhxxPage();
@@ -627,20 +659,6 @@
 		height: 100%;
 		display: flex;
 		flex-direction: column;
-	}
-
-	.el-container {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	/* 头部样式 */
-	.el-header {
-		padding: 15px 20px;
-		height: auto !important;
-		background-color: #f8f9fa;
-		box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 	}
 
 	.header-container {
@@ -706,56 +724,6 @@
 		font-weight: 500;
 	}
 
-	/* 主体内容样式 */
-	.el-main {
-		padding: 15px;
-		flex: 1;
-		overflow: auto;
-		background-color: #f5f7fa;
-	}
-
-	.el-button {
-		border-radius: 4px;
-		transition: all 0.3s ease;
-		font-weight: 500;
-	}
-
-	.el-button[type="primary"][icon="Search"] {
-		color: #0050B3;
-		border-color: #409EFF;
-		background-color: #E6F7FF;
-	}
-
-	.el-button[type="primary"][icon="Search"]:hover {
-		color: #0039A6;
-		border-color: #3A8EE6;
-		background-color: #BAE1FF;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	}
-
-	.el-button--primary,
-	.el-button--danger,
-	.el-button[type="primary"] {
-		padding: 8px 16px;
-		font-size: 13px;
-		height: 40px;
-	}
-
-	.el-button:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	}
-
-	/* 表格样式 */
-	.el-table {
-		width: 100%;
-		margin-top: 15px;
-		border-radius: 4px;
-		overflow: hidden;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-	}
-
 	.el-table th {
 		background-color: #f5f7fa;
 		color: #606266;
@@ -766,64 +734,11 @@
 		background-color: #ecf5ff !important;
 	}
 
-	/* 分页样式 */
-	.el-pagination {
-		margin-top: 15px;
-		text-align: right;
-	}
-
-	/* 模态框样式 */
-	.el-dialog {
-		border-radius: 8px;
-		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-	}
 
 	.demo-form-inline {
 		padding: 10px 0;
 	}
 
-	.el-form-item {
-		margin-bottom: 15px;
-	}
-
-	.el-form-item__label {
-		font-weight: 500;
-	}
-
-	/* 主按钮样式 */
-	.el-button--primary {
-		color: #0050B3;
-		border-color: #409EFF;
-		background-color: #E6F7FF;
-	}
-
-	.el-button--primary:hover {
-		color: #0039A6;
-		border-color: #3A8EE6;
-		background-color: #BAE1FF;
-	}
-
-	/* 危险按钮样式 */
-	.el-button--danger {
-		color: #C12E2A;
-		border-color: #F56C6C;
-		background-color: transparent;
-	}
-
-	.el-button--danger:hover {
-		color: #9E1F1B;
-		border-color: #E53935;
-		background-color: #FFF0F0;
-	}
-
-	/* 无数据提示 */
-	.no-data {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 500px;
-		color: #909399;
-	}
 
 	/* 响应式样式（屏幕宽度小于768px时） */
 	@media (max-width: 768px) {
@@ -838,23 +753,5 @@
 			padding: 0 !important;
 		}
 
-		.el-table__header-wrapper,
-		.el-table__body-wrapper {
-			overflow-x: auto;
-		}
-
-		.el-dialog {
-			width: 90% !important;
-		}
-
-		.operation-btn,
-		.filter-btn,
-		.el-button--primary,
-		.el-button--danger,
-		.el-button[type="primary"][icon="Search"] {
-			padding: 6px 12px;
-			font-size: 12px;
-			height: 36px;
-		}
-	}
+  }
 </style>

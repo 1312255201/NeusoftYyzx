@@ -25,7 +25,7 @@ public class BackdownServiceImpl extends ServiceImpl<BackdownMapper, Backdown> i
         Integer pageSize = backdownDTo.getPageSize() != null ? backdownDTo.getPageSize() : 10;
         
         Page<BackdownVo> page = new Page<>(pageNum, pageSize);
-        backdownMapper.selectBackdownVo(page, backdownDTo.getCustomerId());
+        backdownMapper.selectBackdownVo(page, backdownDTo.getCustomerId(),backdownDTo.getUserId());
         return ResultVo.ok(page);
     }
 

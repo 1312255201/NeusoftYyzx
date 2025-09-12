@@ -41,6 +41,9 @@ public interface OutwardMapper extends BaseMapper<Outward> {
             "<if test='customerId!=null and customerId!=\"\"'>" +
             "and ow.customer_id=#{customerId}" +
             "</if>" +
+            "<if test='userId!=null and userId!=\"\"'>" +
+            "and u.id=#{userId}" +
+            "</if>" +
             "</script>")
-    Page<OutwardVo> selectOutwardVo(@Param("page") Page<OutwardVo> page, @Param("customerId") Integer customerId) throws Exception;
+    Page<OutwardVo> selectOutwardVo(@Param("page") Page<OutwardVo> page, @Param("customerId") Integer customerId,@Param("userId") Integer userId) throws Exception;
 }

@@ -1,6 +1,11 @@
 package cn.gugufish.yyzx.controller;
 
+import cn.gugufish.yyzx.pojo.Bed;
+import cn.gugufish.yyzx.pojo.Customer;
 import cn.gugufish.yyzx.pojo.vo.OutwardVo;
+import cn.gugufish.yyzx.service.BedService;
+import cn.gugufish.yyzx.service.CustomerService;
+import cn.gugufish.yyzx.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import cn.gugufish.yyzx.pojo.dto.OutwardDTO;
 import cn.gugufish.yyzx.pojo.Outward;
@@ -19,7 +24,11 @@ import org.springframework.web.bind.annotation.*;
 public class OutwardController {
 
     @Resource
-    private OutwardService outwardService;
+    OutwardService outwardService;
+    @Resource
+    BedService bedService;
+    @Resource
+    CustomerService customerService;
 
     @Operation(summary = "查询外出记录")
     @PostMapping("/queryOutwardVo")
@@ -57,11 +66,17 @@ public class OutwardController {
 
     @Operation(summary = "登记回院时间")
     @PostMapping("/updateBackTime")
-    public ResultVo<Object> updateBackTime(Outward outward) throws Exception {
+    public ResultVo<Object> updateBackTime(@RequestBody Outward outward) throws Exception {
         UpdateWrapper<Outward> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("id", outward.getId());
-        updateWrapper.set("actual_return_time", outward.getActualreturntime());
+        updateWrapper.set("actualreturntime", outward.getActualreturntime());
+
         outwardService.update(updateWrapper);
+        Customer cs = customerService.getById(outward.getCustomerId());
+        Bed bed = new Bed();
+        bed.setId(cs.getBedId());
+        bed.setBedStatus(1);
+        bedService.updateById(bed);
         return ResultVo.ok("登记成功");
     }
 }
