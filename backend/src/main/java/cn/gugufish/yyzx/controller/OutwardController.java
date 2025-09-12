@@ -6,6 +6,7 @@ import cn.gugufish.yyzx.pojo.vo.OutwardVo;
 import cn.gugufish.yyzx.service.BedService;
 import cn.gugufish.yyzx.service.CustomerService;
 import cn.gugufish.yyzx.service.UserService;
+import cn.gugufish.yyzx.utils.Const;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import cn.gugufish.yyzx.pojo.dto.OutwardDTO;
 import cn.gugufish.yyzx.pojo.Outward;
@@ -50,8 +51,8 @@ public class OutwardController {
 
     @Operation(summary = "审批外出申请")
     @PostMapping("/examineOutward")
-    public ResultVo<Void> examineOutward(@RequestBody Outward outward) throws Exception {
-        return outwardService.examineOutward(outward);
+    public ResultVo<Void> examineOutward(@RequestAttribute(Const.ATTR_USER_ID) Integer userId, @RequestBody Outward outward) throws Exception {
+        return outwardService.examineOutward(outward ,userId);
     }
 
     @Operation(summary = "撒回外出申请")

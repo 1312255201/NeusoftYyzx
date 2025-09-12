@@ -264,22 +264,23 @@
 					dialogExamineVisible: false, // 审批对话框状态
 					tops: "", // 模态框标题
 					item: {
-					id: "",
-					username: "",
-					customerName: "",
-					checkinDate: "",
+				id: "",
+				customerId: "",
+				username: "",
+				customerName: "",
+				checkinDate: "",
             		outgoingreason: "", 
-					outgoingtime: "", 
-					expectedreturntime: "", 
-					actualreturntime: "", 
-					escorted: "",
-					relation: "",
-					escortedtel: "",
-						auditStatus: 0,
-						bedId: "",
-						roleId: "",
-						backTimeId: ""
-					},
+				outgoingtime: "", 
+				expectedreturntime: "", 
+				actualreturntime: "", 
+				escorted: "",
+				relation: "",
+				escortedtel: "",
+					auditStatus: 0,
+					bedId: "",
+					roleId: "",
+					backTimeId: ""
+				},
 					statusArr: [{
 							value: 1,
 							label: "停用"
@@ -523,9 +524,17 @@
 			examineOutward(formName) {
 				this.$refs[formName].validate(valid => {
 					if (valid) {
-						this.dialog.item.auditTime = getCurDate();
-						this.dialog.item.auditPerson = getSessionStorage('user').id;
-						examineOutward(this.dialog.item).then(res => {
+						const auditData = {
+							id: this.dialog.item.id,
+							outgoingreason: this.dialog.item.outgoingreason,
+							escorted: this.dialog.item.escorted,
+							relation: this.dialog.item.relation,
+							escortedtel: this.dialog.item.escortedtel,
+							auditstatus: this.dialog.item.auditStatus, // 字段名转换
+							auditTime: getCurDate(),
+							auditPerson: getSessionStorage('user').id
+						};
+						examineOutward(auditData).then(res => {
 							if (res.flag) {
 								this.$message.success(res.message);
 								// 刷新数据表格
@@ -589,6 +598,7 @@
 							escorted: this.dialog.item.escorted,
 							relation: this.dialog.item.relation,
 							escortedtel: this.dialog.item.escortedtel,
+							auditstatus: 0, 
 							createTime: getCurDate(),
 							createBy: getSessionStorage("user").id,
 							roleId: 2,

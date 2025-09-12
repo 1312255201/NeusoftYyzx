@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
 
+import java.util.Date;
+
 @Service
 public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> implements OutwardService {
     @Resource
@@ -29,12 +31,13 @@ public class OutwardServiceImpl extends ServiceImpl<OutwardMapper, Outward> impl
     CustomerService customerService;
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ResultVo<Void> examineOutward(Outward outward) throws Exception {
-        UpdateWrapper<Outward> updateWrapper = new UpdateWrapper<>();
-        updateWrapper.eq("id", outward.getId());
-        updateWrapper.set("auditstatus", outward.getAuditstatus());
-        outwardMapper.update(outward, updateWrapper);
-        Customer cs = customerService.getById(outward.getCustomerId());
+    public ResultVo<Void> examineOutward(Outward outward,Integer userId) throws Exception {
+        Outward outward1 = outwardMapper.selectById(outward.getId());
+        outward1.setAuditperson(userId.toString()  );
+        outward1.setAudittime(new Date());
+        outward1.setAuditstatus(outward.getAuditstatus());
+        outwardMapper.updateById(outward1);
+        Customer cs = customerService.getById(outward1.getCustomerId());
         Bed bed = new Bed();
         bed.setId(cs.getBedId());
         bed.setBedStatus(3);
