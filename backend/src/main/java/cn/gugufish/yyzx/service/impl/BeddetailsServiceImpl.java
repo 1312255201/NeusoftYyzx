@@ -1,5 +1,6 @@
 package cn.gugufish.yyzx.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import cn.gugufish.yyzx.pojo.dto.BedDetailsDTO;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class BeddetailsServiceImpl extends ServiceImpl<BeddetailsMapper, Beddetails> implements BeddetailsService {
@@ -80,5 +82,48 @@ public class BeddetailsServiceImpl extends ServiceImpl<BeddetailsMapper, Beddeta
             throw new Exception("床位调换失败");
         }
         return ResultVo.ok("床位调换成功");
+    }
+
+    @Override
+    public ResultVo<BedDetailsVo> getBedPersonInfoByBedId(Integer bedId) throws Exception {
+        // 查询当前床位的有效床位详情信息（is_deleted=0且结束日期大于当前日期）
+        QueryWrapper<Beddetails> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("bed_id", bedId)
+                   .eq("is_deleted", 0)
+                   .orderByDesc("start_date")
+                   .last("LIMIT 1");
+        
+        Beddetails beddetails = beddetailsMapper.selectOne(queryWrapper);
+        
+        if (beddetails == null) {
+            return ResultVo.fail("该床位暂无人员信息");
+        }
+        
+        // 查询客户信息
+        Customer customer = customerMapper.selectById(beddetails.getCustomerId());
+        if (customer == null) {
+            return ResultVo.fail("未找到客户信息");
+        }
+        
+        // 查询床位信息
+        Bed bed = bedMapper.selectById(bedId);
+        if (bed == null) {
+            return ResultVo.fail("未找到床位信息");
+        }
+        
+        // 构建返回的BedDetailsVo对象
+        BedDetailsVo bedDetailsVo = new BedDetailsVo();
+        bedDetailsVo.setId(beddetails.getId());
+        bedDetailsVo.setIsDeleted(beddetails.getIsDeleted());
+        bedDetailsVo.setStartDate(beddetails.getStartDate());
+        bedDetailsVo.setEndDate(beddetails.getEndDate());
+        bedDetailsVo.setBedDetails(beddetails.getBedDetails());
+        bedDetailsVo.setCustomerId(beddetails.getCustomerId());
+        bedDetailsVo.setBedId(beddetails.getBedId());
+        bedDetailsVo.setCustomerName(customer.getCustomerName());
+        bedDetailsVo.setCustomerSex(customer.getCustomerSex());
+        bedDetailsVo.setRoomNo(String.valueOf(bed.getRoomNo()));
+        
+        return ResultVo.ok(bedDetailsVo);
     }
 }

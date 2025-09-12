@@ -13,4 +13,6 @@ public interface BeddetailsService extends IService<Beddetails> {
     ResultVo<Page<BedDetailsVo>> listBedDetailsVoPage(BedDetailsDTO bedDetailsDTO) throws Exception;
 
     ResultVo<Void> exchangeBed(ExchangeDTO exchangeDTO) throws Exception;
+
+    ResultVo<BedDetailsVo> getBedPersonInfoByBedId(Integer bedId) throws Exception;
 }

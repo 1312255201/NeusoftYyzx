@@ -62,7 +62,7 @@
 					</tr>
 					<tr class="cwsyt_tbody">
 						<td v-for="(item,index) in listRoom" :key="item.roomNo" v-show="index <6 ">
-							<a href="javascript:void(0)" v-for="bedItem in item.bedList" :key="bedItem.bedNo">
+							<a href="javascript:void(0)" v-for="bedItem in item.bedList" :key="bedItem.bedNo" @click="handleBedClick(bedItem.id)">
 								<div>
 									<img v-if="bedItem.bedStatus===1" src="@/assets/bed/kx.png" />
 									<img v-if="bedItem.bedStatus===2" src="@/assets/bed/yr.png" />
@@ -77,7 +77,7 @@
 					</tr>
 					<tr class="cwsyt_tbody">
 						<td v-for="(item,index) in listRoom" :key="item.roomNo" v-show="index >=6 ">
-							<a href="javascript:void(0)" v-for="bedItem in item.bedList" :key="bedItem.bedNo">
+							<a href="javascript:void(0)" v-for="bedItem in item.bedList" :key="bedItem.bedNo" @click="handleBedClick(bedItem.id)">
 								<div>
 									<img v-if="bedItem.bedStatus==1" src="@/assets/bed/kx.png" />
 									<img v-if="bedItem.bedStatus==2" src="@/assets/bed/yr.png" />
@@ -89,13 +89,54 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<!-- 床位人员信息弹窗 -->
+		<el-dialog
+			title="床位人员信息"
+			v-model="dialogVisible"
+			width="500px"
+			@close="handleDialogClose"
+			center>
+			<div v-loading="loading" class="person-info">
+				<div v-if="bedPersonInfo && Object.keys(bedPersonInfo).length > 0" class="info-content">
+					<div class="info-item">
+						<label>姓名：</label>
+						<span>{{ bedPersonInfo.customerName || '暂无' }}</span>
+					</div>
+					<div class="info-item">
+						<label>性别：</label>
+						<span>{{ bedPersonInfo.customerSex === 1 ? '男' : bedPersonInfo.customerSex === 0 ? '女' : '暂无' }}</span>
+					</div>
+					<div class="info-item">
+						<label>房间号：</label>
+						<span>{{ bedPersonInfo.roomNo || '暂无' }}</span>
+					</div>
+					<div class="info-item">
+						<label>入住时间：</label>
+						<span>{{ bedPersonInfo.startDate ? new Date(bedPersonInfo.startDate).toLocaleDateString() : '暂无' }}</span>
+					</div>
+					<div class="info-item">
+						<label>预计离开时间：</label>
+						<span>{{ bedPersonInfo.endDate ? new Date(bedPersonInfo.endDate).toLocaleDateString() : '暂无' }}</span>
+					</div>
+					<div class="info-item" v-if="bedPersonInfo.bedDetails">
+						<label>备注：</label>
+						<span>{{ bedPersonInfo.bedDetails }}</span>
+					</div>
+				</div>
+				<div v-else class="no-info">
+					<p>该床位暂无人员信息</p>
+				</div>
+			</div>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="handleDialogClose">关闭</el-button>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
-	import {
-		findCwsyBedVo
-	} from '@/api/bedApi.js'
+import { findCwsyBedVo, getBedPersonInfo } from '@/api/bedApi.js'
 	export default {
 		data() {
 			return {
@@ -109,7 +150,11 @@
 					yr: '',
 					wc: ''
 				},
-				listRoom: []
+				listRoom: [],
+				// 弹窗相关数据
+				dialogVisible: false,
+				bedPersonInfo: {},
+				loading: false
 			};
 		},
 		mounted() {
@@ -126,6 +171,28 @@
 					this.count.wc = res.data.wc;
 					this.listRoom = res.data.roomList
 				})
+			},
+			// 点击床位查看人员信息
+			handleBedClick(bedId) {
+				this.loading = true;
+				getBedPersonInfo(bedId).then(res => {
+				this.loading = false;
+				if (res.flag === true && res.data) {
+					this.bedPersonInfo = res.data;
+					this.dialogVisible = true;
+				} else {
+					this.$message.warning(res.message || '该床位暂无人员信息');
+				}
+				}).catch(err => {
+					this.loading = false;
+					this.$message.error('获取床位信息失败');
+					console.error(err);
+				});
+			},
+			// 关闭弹窗
+			handleDialogClose() {
+				this.dialogVisible = false;
+				this.bedPersonInfo = {};
 			}
 		}
 	};
@@ -347,5 +414,47 @@
 	.query-table tr {
 		height: 50px;
 		/* 统一行高，使布局更整齐 */
+	}
+
+	/* 弹窗样式 */
+	.person-info {
+		padding: 20px 0;
+	}
+
+	.info-content .info-item {
+		display: flex;
+		align-items: center;
+		margin-bottom: 15px;
+		padding: 10px;
+		background-color: #f8f9fa;
+		border-radius: 6px;
+		border-left: 4px solid #409eff;
+	}
+
+	.info-content .info-item label {
+		font-weight: bold;
+		color: #333;
+		min-width: 100px;
+		margin-right: 10px;
+	}
+
+	.info-content .info-item span {
+		color: #666;
+		flex: 1;
+	}
+
+	.no-info {
+		text-align: center;
+		padding: 40px 0;
+		color: #999;
+	}
+
+	.no-info p {
+		font-size: 16px;
+		margin: 0;
+	}
+
+	.dialog-footer {
+		text-align: center;
 	}
 </style>

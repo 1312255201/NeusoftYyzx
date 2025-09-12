@@ -40,11 +40,17 @@ public class BeddetailsController {
         return beddetailsService.exchangeBed(exchangeDTO);
     }
 
-    @GetMapping("/delBedDetails")
+    @PostMapping("/delBedDetails")
     @Operation(summary = "删除记录")
-    public ResultVo<Void>  delBedDetails(Integer id) throws Exception {
+    public ResultVo<Void> delBedDetails(@RequestBody Integer id) throws Exception {
         beddetailsService.removeById(id);
         return ResultVo.ok("删除成功");
+    }
+
+    @GetMapping("/getBedPersonInfo/{bedId}")
+    @Operation(summary = "根据床位ID查询床位人员信息")
+    public ResultVo<BedDetailsVo> getBedPersonInfo(@PathVariable Integer bedId) throws Exception {
+        return beddetailsService.getBedPersonInfoByBedId(bedId);
     }
 }
 

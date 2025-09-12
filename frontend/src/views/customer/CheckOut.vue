@@ -575,7 +575,7 @@
 
 	.card-header {
 		height: 50px;
-		background-color: #3ca2e0;
+		background-color: #5bb6ec;
 		color: #fff;
 		font-size: 16px;
 		line-height: 50px;

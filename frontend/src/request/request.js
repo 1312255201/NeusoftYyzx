@@ -67,6 +67,9 @@ const JSON_APIS = [
 	// 护理记录相关API
 	'/nurserecord/addNurseRecord',
 	'/nurserecord/queryOutwardVo',
+
+    //床位信息相关API
+    '/beddetails/delBedDetails',
 ];
 
 /**
