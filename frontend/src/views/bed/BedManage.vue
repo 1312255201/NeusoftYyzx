@@ -1,7 +1,7 @@
 <template>
 	<div class="common-layout">
 		<el-container>
-			<el-header style="padding: 5px" >
+			<el-header >
 				<div>
 					<el-row :gutter="30" style="margin-bottom: 0px; height: 30px" >
             <el-col :span="1">

@@ -2,10 +2,10 @@
 	<div class="common-layout">
 		<el-container>
 			<!-- 页面头部：包含搜索框和操作按钮 -->
-			<el-header>
+			<el-header >
 				<div class="header-container">
-					<el-form :inline="true" class="search-form">
-						<el-row :gutter="15" class="search-row">
+					<el-form :inline="true" class="search-form" >
+						<el-row :gutter="15" class="search-row" style="height: 35px">
 							<!-- 客户姓名搜索框 -->
 							<el-col :span="6" class="input-col">
 								<el-form-item label="客户姓名: ">
@@ -43,18 +43,18 @@
 			<el-main>
 				<div>
 					<!-- 表格 -->
-					<el-table :data="preferenceList" style="width: 100% ;color:black;" stripe>
+					<el-table :data="preferenceList" style="width: 100% ;color:black;" stripe table-layout="fixed">
 						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" />
-						<el-table-column align="center" prop="customerName" label="客户名称" width="120" />
+						<el-table-column align="center" prop="customerName" label="客户名称" />
 						<el-table-column align="center" prop="customerSex" label="性别" width="60">
 							<template #default="scope">{{ scope.row.customerSex==0?'男':'女'}}</template>
 						</el-table-column>
-						<el-table-column align="center" prop="customerAge" label="年龄" width="120" />
-						<el-table-column align="center" prop="preferences" label="喜好" width="300" />
-						<el-table-column align="center" prop="attention" label="注意事项" width="200" />
-						<el-table-column align="center" prop="remark" label="备注" width="200" />
+						<el-table-column align="center" prop="customerAge" label="年龄"  />
+						<el-table-column align="center" prop="preferences" label="喜好" />
+						<el-table-column align="center" prop="attention" label="注意事项" />
+						<el-table-column align="center" prop="remark" label="备注"  />
 
-						<el-table-column align="center" fixed="right" label="操作" width="220">
+						<el-table-column align="center" fixed="right" label="操作">
 							<template #default="scope">
 								<el-button type="primary" icon="Edit" link
 									style="color: #337ab7; border-color: #337ab7;"

@@ -54,22 +54,22 @@
 			<el-main>
 				<div>
 					<!-- 表格 -->
-					<el-table :data="foodList" style="width: 100% ;color:black;" stripe>
-						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" />
-						<el-table-column align="center" prop="id" label="编号" width="120" />
-						<el-table-column align="center" prop="foodName" label="食品名称" width="150" />
-						<el-table-column align="center" prop="foodType" label="食品类型" width="120" />
-						<el-table-column align="center" prop="price" label="价格" width="100">
+					<el-table :data="foodList" style="width: 100% ;color:black;" stripe table-layout="fixed">
+						<el-table-column align="center" type="index" :index="indexMethod" label="序号"  />
+						<el-table-column align="center" prop="id" label="编号" />
+						<el-table-column align="center" prop="foodName" label="食品名称"/>
+						<el-table-column align="center" prop="foodType" label="食品类型" />
+						<el-table-column align="center" prop="price" label="价格">
 							<template #default="scope">¥{{ scope.row.price }}</template>
 						</el-table-column>
-						<el-table-column align="center" prop="isHalal" label="是否清真" width="120">
+						<el-table-column align="center" prop="isHalal" label="是否清真">
 							<template #default="scope">
 								<el-tag :type="scope.row.isHalal === 1 ? 'success' : 'info'">
 									{{ scope.row.isHalal === 1 ? '是' : '否' }}
 								</el-tag>
 							</template>
 						</el-table-column>
-						<el-table-column align="center" prop="foodImg" label="食品图片" width="120">
+						<el-table-column align="center" prop="foodImg" label="食品图片" >
 							<template #default="scope">
 								<el-image v-if="scope.row.foodImg" 
 									:src="getImageUrl(scope.row.foodImg)" 
@@ -81,7 +81,7 @@
 								<span v-else style="color: #999;">无图片</span>
 							</template>
 						</el-table-column>
-						<el-table-column align="center" label="操作" width="200">
+						<el-table-column align="center" label="操作" >
 							<template #default="scope">
 								<el-button type="primary" size="small" @click="edit(scope.row)">
 									<el-icon><EditPen /></el-icon>

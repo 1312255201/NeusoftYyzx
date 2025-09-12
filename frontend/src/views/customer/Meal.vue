@@ -1,7 +1,7 @@
 <template>
 	<div class="common-layout">
 		<el-container>
-			<el-header>
+			<el-header style="height: 40px">
 				<div>
 					<el-row :gutter="30">
 						<el-col :span="17">
@@ -17,13 +17,13 @@
 			</el-header>
 			<el-divider style="margin:0"></el-divider>
 			<el-main>
-				<el-tabs type="border-card" @tab-click="handleTabClick" v-model="activeWeekDay">
+				<el-tabs type="border-card" @tab-click="handleTabClick" v-model="activeWeekDay" style="height: 40px">
 					<el-tab-pane v-for="(week, index) in weekdayList" :label="week" :name="week" :key="index" />
 				</el-tabs>
 				<div v-if="activeWeekDay">
 					<!-- 早餐区域 -->
 					<el-row :gutter="20" class="row">
-						<el-col :span="2" class="mealtype">
+						<el-col :span="2" class="mealtype" style="height: 350px ">
 							<span>{{mealTypeName(1)}}<br />餐</span>
 						</el-col>
 						<el-col v-for="(meal, index) in breakfastList" :key="meal.id || index" :span="4" class="food">
@@ -78,7 +78,7 @@
 
 					<!-- 午餐区域 -->
 					<el-row :gutter="20" class="row">
-						<el-col :span="2" class="mealtype"><span>{{mealTypeName(2)}}<br />餐</span></el-col>
+						<el-col :span="2" class="mealtype" style="height: 350px "><span>{{mealTypeName(2)}}<br />餐</span></el-col>
 						<el-col v-for="(meal, index) in lunchList" :key="meal.id || index" :span="4" class="food">
 							<el-card :body-style="{ padding: '15px' }" class="card" shadow="hover">
 								<!-- 口味标签 -->
@@ -127,8 +127,8 @@
 					</el-row>
 
 					<!-- 晚餐区域 -->
-					<el-row :gutter="20" class="row">
-						<el-col :span="2" class="mealtype"><span>{{mealTypeName(3)}}<br />餐</span></el-col>
+					<el-row :gutter="20" class="row" >
+						<el-col :span="2" class="mealtype" style="height: 350px "><span>{{mealTypeName(3)}}<br />餐</span></el-col>
 						<el-col v-for="(meal, index) in dinnerList" :key="meal.id || index" :span="4" class="food">
 							<el-card :body-style="{ padding: '15px' }" class="card" shadow="hover">
 								<!-- 口味标签 -->

@@ -8,11 +8,15 @@
         <Aside></Aside>
       </el-aside>
       <!--Tab选项-->
-      <el-main style="padding: 5px;">
-        <TabNav></TabNav>
-        <transition name="fade" mode="out-in">
-          <router-view />
-        </transition>
+      <el-main style="padding: 0; position: relative;">
+        <div class="tab-nav-fixed">
+          <TabNav></TabNav>
+        </div>
+        <div class="content-area">
+          <transition name="fade" mode="out-in">
+            <router-view />
+          </transition>
+        </div>
       </el-main>
     </el-container>
 	</el-container>
@@ -78,5 +82,22 @@
 	.fade-enter-to,
 	.fade-leave-from {
 		opacity: 1;
+	}
+
+	/* Tab栏固定样式 */
+	.tab-nav-fixed {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background-color: #fff;
+		border-bottom: 1px solid #e4e7ed;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	/* 内容区域样式 */
+	.content-area {
+		padding: 5px;
+		overflow-y: auto;
+		flex: 1;
 	}
 </style>
