@@ -4,9 +4,9 @@
 			<el-header>
 				<div class="header-container">
 					<el-form :inline="true" class="search-form">
-						<el-row :gutter="15" class="search-row">
+						<el-row :gutter="15" class="search-row" style="height: 35px">
 							<!-- 真实姓名输入框 -->
-							<el-col :span="6" class="input-col">
+							<el-col :span="6" class="input-col" >
 								<el-form-item label="管家名称: ">
 									<el-input placeholder="请输入管家姓名" v-model="queryParams.nickname" @clear="query"
 										clearable size="large" class="full-width">
@@ -37,15 +37,15 @@
 
 					<!-- 表格 -->
 					<el-table :data="userList" style="width: 100%; color:black;" stripe :max-height="tableMaxHeight"
-						size="small">
+						size="small"  table-layout="fixed">
 						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="80" />
-						<el-table-column align="center" prop="nickname" label="姓名" width="140" />
-						<el-table-column align="center" prop="phoneNumber" label="电话" width="160" />
-						<el-table-column align="center" prop="sex" label="性别" width="100">
+						<el-table-column align="center" prop="nickname" label="姓名"  />
+						<el-table-column align="center" prop="phoneNumber" label="电话" />
+						<el-table-column align="center" prop="sex" label="性别">
 							<template #default="scope">{{ scope.row.sex==1?'男':'女'}}</template>
 						</el-table-column>
-						<el-table-column align="center" prop="email" label="邮箱" width="200" />
-						<el-table-column align="center" fixed="right" label="操作" width="260">
+						<el-table-column align="center" prop="email" label="邮箱"  />
+						<el-table-column align="center" fixed="right" label="操作">
 							<template #default="scope">
 								<div class="operation-group">
 									<el-button type="primary" icon="Star" size="small" class="operation-btn"
@@ -237,7 +237,7 @@
 
 	/* 头部样式 */
 	.el-header {
-		padding: 15px 20px;
+		padding: 10px 10px;
 		height: auto !important;
 		background-color: #f8f9fa;
 		box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -291,8 +291,6 @@
 
 	.card-header {
 		height: 50px;
-		background-color: #3ca2e0;
-		color: #fff;
 		font-size: 16px;
 		line-height: 50px;
 		padding: 0 20px;

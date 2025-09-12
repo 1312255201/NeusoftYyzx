@@ -1,9 +1,12 @@
 <template>
 	<div class="common-layout">
 		<el-container>
-			<el-header>
+			<el-header style="padding: 5px" >
 				<div>
-					<el-row :gutter="30">
+					<el-row :gutter="30" style="margin-bottom: 0px; height: 30px" >
+            <el-col :span="1">
+
+            </el-col>
 						<el-col :span="5">
 							<el-form-item label="姓名: ">
 								<el-input placeholder="请输入客户姓名" clearable v-model="queryParams.customerName" @clear="query" />
@@ -34,35 +37,34 @@
 				</div>
 				<div>
 					<!-- 表格 -->
-					<el-table :data="bedDetailsList" style="width: 100%;color:black;" stripe>
-						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60">
+					<el-table :data="bedDetailsList" style="width: 100%;color:black;" stripe table-layout="fixed">
+						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="75px">
 						</el-table-column>
-						<el-table-column align="center" prop="customerName" label="客户姓名" width="120" />
-						<el-table-column align="center" prop="customerSex" label="性别" width="100">
+						<el-table-column align="center" prop="customerName" label="客户姓名"  />
+						<el-table-column align="center" prop="customerSex" label="性别" >
 							<template #default="scope">{{ scope.row.customerSex === 0 ? '男' : '女' }}</template>
 						</el-table-column>
-						<el-table-column align="center" prop="bedDetails" label="床位详情" width="120" />
-						<!-- <el-table-column align="center" prop="roomNo" label="房间号" width="120" /> -->
-						<el-table-column align="center" prop="startDate" label="床位使用起始日期" width="150">
+						<el-table-column align="center" prop="bedDetails" label="床位详情" />
+						<el-table-column align="center" prop="startDate" label="床位使用起始日期">
 						<template #default="scope">
 							{{ formatDate(scope.row.startDate, 'YYYY年MM月DD日') }}
 						</template>
 					</el-table-column>
-					<el-table-column align="center" prop="endDate" label="床位使用结束日期" width="150">
+					<el-table-column align="center" prop="endDate" label="床位使用结束日期" >
 						<template #default="scope">
 							{{ formatDate(scope.row.endDate, 'YYYY年MM月DD日') }}
 						</template>
 					</el-table-column>
-						<el-table-column align="center" fixed="right" label="操作" width="220">
-							<template #default="scope">
-								<el-button type="warning" link icon="Switch" v-if="btnFlag" size="small"
-									@click="exchange(scope.row)">床位调换</el-button>
-								<el-button type="primary" icon="Edit" link size="small" v-if="btnFlag"
-									@click="editMessage(scope.row)">修改</el-button>
-								<el-button type="danger" icon="Delete" size="small" v-if="!btnFlag"
-									@click="del(scope.row.id)">删除</el-button>
-							</template>
-						</el-table-column>
+          <el-table-column align="center" fixed="right" label="操作" >
+            <template #default="scope">
+              <el-button type="warning" link icon="Switch" v-if="btnFlag" size="small"
+                @click="exchange(scope.row)">床位调换</el-button>
+              <el-button type="primary" icon="Edit" link size="small" v-if="btnFlag"
+                @click="editMessage(scope.row)">修改</el-button>
+              <el-button type="danger" icon="Delete" size="small" v-if="!btnFlag"
+                @click="del(scope.row.id)">删除</el-button>
+            </template>
+          </el-table-column>
 					</el-table>
 				</div>
 				<!-- 分页插件 -->
@@ -679,6 +681,7 @@
 
 	/* 表格样式 */
 	.el-table {
+    table-layout: fixed;
 		width: 100%;
 		margin-top: 15px;
 		border-radius: 4px;

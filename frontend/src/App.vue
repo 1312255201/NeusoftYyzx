@@ -1,5 +1,7 @@
 <template>
-  <router-view/>
+  <transition name="page" mode="out-in">
+    <router-view/>
+  </transition>
 </template>
 
 <script>
@@ -18,6 +20,28 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #000000;
   height: 100%;
+}
+
+/* 页面级切换动画 */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.page-enter-to,
+.page-leave-from {
+  opacity: 1;
+  transform: translateX(0);
 }
 html,
 	body,

@@ -1,20 +1,20 @@
 <template>
 	<el-container style="height: 100%;">
-
-		<!--左边菜单-->
-		<Aside></Aside>
-
-		<!--右边内容-->
-		<el-container direction="vertical">
-			<Header></Header>
-
-			<!--Tab选项-->
-			<TabNav></TabNav>
-
-			<el-main>
-				<router-view />
-			</el-main>
-		</el-container>
+    <el-header style="border-bottom: 1px solid #e4e7ed;">
+      <Header></Header>
+    </el-header>
+    <el-container>
+      <el-aside width="200px">
+        <Aside></Aside>
+      </el-aside>
+      <!--Tab选项-->
+      <el-main style="padding: 5px;">
+        <TabNav></TabNav>
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
+      </el-main>
+    </el-container>
 	</el-container>
 </template>
 
@@ -62,5 +62,21 @@
 	#asideNav,
 	ul.el-menu {
 		height: 100%;
+	}
+
+	/* 页面切换淡入淡出动画 */
+	.fade-enter-active,
+	.fade-leave-active {
+		transition: opacity 0.5s ease-in-out;
+	}
+
+	.fade-enter-from,
+	.fade-leave-to {
+		opacity: 0;
+	}
+
+	.fade-enter-to,
+	.fade-leave-from {
+		opacity: 1;
 	}
 </style>

@@ -1,10 +1,7 @@
 <template>
 	<el-aside id="asideNav" width="200px">
-		<div class="logo-name">
-			<p>东软颐养中心</p>
-			<img src="../assets/logo.png" class="logo-png" />
-		</div>
-		<el-menu active-text-color="#ffd04b" background-color="#3CA2E0" :default-active="$route.path" text-color="#fff"
+
+		<el-menu :default-active="$route.path"
 			:router="true" unique-opened>
 			<template v-for="menu in $store.getters.menus">
 				<el-sub-menu :index="menu.menusIndex">
@@ -68,7 +65,6 @@
 	#asideNav .logo-name {
 		width: 100%;
 		height: 150px;
-		background-color: #3CA2E0;
 	}
 
 	#asideNav .logo-name .logo-png {
@@ -84,7 +80,6 @@
 		text-align: center;
 		font-size: 25px;
 		margin: 0px;
-		color: #fff;
 	}
 
 </style>

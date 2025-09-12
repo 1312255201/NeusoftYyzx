@@ -2,6 +2,9 @@
 	<el-header id="header">
 		<div>
 			<img style="width:40px;height:40px;margin:20px 0 0 -12px" src="@/assets/logosmall.jpg" />
+      <h2 style="display: inline; position: relative ; top: -10px" >
+        东软颐养中心
+      </h2>
 		</div>
 
 		<el-dropdown split-button type="default">

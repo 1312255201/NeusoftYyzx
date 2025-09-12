@@ -4,7 +4,7 @@
 			<el-header>
 				<div class="header-container">
 					<el-form :inline="true" class="search-form">
-						<el-row :gutter="15" class="search-row">
+						<el-row :gutter="15" class="search-row" style="height: 35px">
 							<!-- 客户姓名输入框 -->
 							<el-col :span="6" class="input-col">
 								<el-form-item label="客户姓名: ">
@@ -499,7 +499,7 @@
 
 	/* 头部样式 */
 	.el-header {
-		padding: 15px 20px;
+		padding: 10px 10px;
 		height: auto !important;
 		background-color: #f8f9fa;
 		box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -545,8 +545,6 @@
 
 	.card-header {
 		height: 50px;
-		background-color: #3ca2e0;
-		color: #fff;
 		font-size: 16px;
 		line-height: 50px;
 		padding: 0 20px;

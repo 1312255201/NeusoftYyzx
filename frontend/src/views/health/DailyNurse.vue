@@ -38,7 +38,7 @@
 					<!-- 表格 -->
 					<el-table :data="khxxList" style="width: 100%; color:black;" stripe :max-height="tableMaxHeight"
 						size="small">
-						<el-table-column align="center" fixed type="index" :index="indexMethod" label="序号" width="60" />
+						<el-table-column align="center" fixed type="index" :index="indexMethod" label="序号" width="70" />
 						<el-table-column align="center" fixed prop="customerName" label="客户姓名" width="120" />
 						<el-table-column align="center" prop="customerAge" label="年龄" width="80" />
 						<el-table-column align="center" prop="customerSex" label="性别" width="80">

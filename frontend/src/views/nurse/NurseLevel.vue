@@ -62,10 +62,10 @@
 
 					<!-- 表格 - 添加max-height使表格可滚动 -->
 					<el-table :data="listLevel" size="small" style="width: 100%; color:black;" stripe
-						:max-height="tableMaxHeight">
-						<el-table-column align="center" type="index" :index="indexMethod" label="序号" width="60" />
-						<el-table-column align="center" prop="levelName" label="护理级别" width="200" />
-						<el-table-column align="center" prop="levelStatus" label="状态" width="200">
+						:max-height="tableMaxHeight" table-layout="fixed">
+						<el-table-column align="center" type="index" :index="indexMethod" label="序号"  />
+						<el-table-column align="center" prop="levelName" label="护理级别" />
+						<el-table-column align="center" prop="levelStatus" label="状态" >
 							<template #default="scope">
 								<el-tag v-if="scope.row.levelStatus === 1" type="success" disable-transitions>
 									启用
@@ -75,7 +75,7 @@
 								</el-tag>
 							</template>
 						</el-table-column>
-						<el-table-column align="center" fixed="right" label="操作" width="300">
+						<el-table-column align="center" fixed="right" label="操作" >
 							<template #default="scope">
 								<div class="operation-group">
 									<el-button type="primary" icon="Edit" size="small" class="operation-btn"
