@@ -3,12 +3,15 @@ package cn.gugufish.yyzx.config;
 import cn.gugufish.yyzx.service.FoodService;
 import cn.gugufish.yyzx.service.RoomService;
 import cn.gugufish.yyzx.service.MealService;
+import cn.gugufish.yyzx.service.NursecontentService;
 import cn.gugufish.yyzx.pojo.dto.MealDTO;
 import cn.gugufish.yyzx.pojo.vo.MealVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import cn.gugufish.yyzx.pojo.vo.CwsyBedVo;
 import cn.gugufish.yyzx.pojo.Food;
+import cn.gugufish.yyzx.pojo.Nursecontent;
 import cn.gugufish.yyzx.utils.ResultVo;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatModel;
@@ -29,6 +32,9 @@ public class AiConfiguration {
 
     @Resource
     private MealService mealService;
+    
+    @Resource
+    private NursecontentService nursecontentService;
     
     @Bean
     public ChatClient chatClient(OllamaChatModel chatModel) {
@@ -57,7 +63,11 @@ public class AiConfiguration {
         String mealInfo = getTodayMealInfo();
         prompt.append("今日膳食信息：\n").append(mealInfo).append("\n\n");
 
-        prompt.append("请根据以上实时信息为老人提供准确、贴心的服务。");
+        // 添加护理项目信息
+        String nurseItemInfo = getNurseItemInfo();
+        prompt.append("护理项目信息：\n").append(nurseItemInfo).append("\n\n");
+
+        prompt.append("请根据以上实时信息为老人提供准确、贴心的服务。当老人询问护理服务相关问题时，请参考护理项目信息进行回答。");
 
         return prompt.toString();
     }
@@ -136,5 +146,54 @@ public class AiConfiguration {
             // 如果获取失败，返回默认信息
         }
         return "膳食信息暂时无法获取";
+    }
+
+    /**
+     * 获取护理项目信息
+     */
+    private String getNurseItemInfo() {
+        try {
+            // 查询所有启用状态的护理项目
+            QueryWrapper<Nursecontent> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("status", 1); // 1表示启用状态
+            queryWrapper.eq("is_deleted", 0); // 0表示未删除
+            queryWrapper.orderByAsc("serial_number"); // 按编号排序
+            
+            List<Nursecontent> nurseItems = nursecontentService.list(queryWrapper);
+            
+            if (nurseItems != null && !nurseItems.isEmpty()) {
+                StringBuilder nurseInfo = new StringBuilder();
+                nurseInfo.append("我们提供以下护理服务项目：\n");
+                
+                for (Nursecontent item : nurseItems) {
+                    nurseInfo.append("• ").append(item.getNursingName());
+                    
+                    // 添加价格信息
+                    if (item.getServicePrice() != null && !item.getServicePrice().isEmpty()) {
+                        nurseInfo.append(" - 价格：").append(item.getServicePrice());
+                    }
+                    
+                    // 添加执行周期和次数
+                    if (item.getExecutionCycle() != null && !item.getExecutionCycle().isEmpty()) {
+                        nurseInfo.append(" - 执行周期：").append(item.getExecutionCycle());
+                        if (item.getExecutionTimes() != null && !item.getExecutionTimes().isEmpty()) {
+                            nurseInfo.append("，每周期").append(item.getExecutionTimes()).append("次");
+                        }
+                    }
+                    
+                    // 添加描述信息
+                    if (item.getMessage() != null && !item.getMessage().trim().isEmpty()) {
+                        nurseInfo.append(" - ").append(item.getMessage());
+                    }
+                    
+                    nurseInfo.append("\n");
+                }
+                
+                return nurseInfo.toString();
+            }
+        } catch (Exception e) {
+            // 如果获取失败，返回默认信息
+        }
+        return "护理项目信息暂时无法获取";
     }
 }

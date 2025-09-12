@@ -179,13 +179,13 @@ export default {
   margin: 0 auto;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   overflow: hidden;
 }
 
 .chat-header {
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-color: #3ca2e0;
   color: white;
   text-align: center;
 }
@@ -206,7 +206,7 @@ export default {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background: #f8f9fa;
+  background: #f5f7fa;
 }
 
 .message {
@@ -232,11 +232,11 @@ export default {
 }
 
 .message.user .message-avatar {
-  background: #409eff;
+  background: #3ca2e0;
 }
 
 .message.ai .message-avatar {
-  background: #67c23a;
+  background: #337ab7;
 }
 
 .message-content {
@@ -253,7 +253,7 @@ export default {
 }
 
 .message.user .message-text {
-  background: #409eff;
+  background: #3ca2e0;
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -322,13 +322,26 @@ export default {
 }
 
 .input-field .el-input__inner {
-  border-radius: 25px;
-  padding-left: 20px;
+  border-radius: 4px;
+  padding-left: 15px;
 }
 
 .input-field .el-input-group__append {
-  border-radius: 0 25px 25px 0;
+  border-radius: 0 4px 4px 0;
   border-left: none;
+}
+
+.input-field .el-button {
+  background-color: #3ca2e0;
+  border-color: #3ca2e0;
+  transition: all 0.3s ease;
+}
+
+.input-field .el-button:hover {
+  background-color: #337ab7;
+  border-color: #337ab7;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes fadeIn {
