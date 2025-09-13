@@ -116,8 +116,8 @@ export default {
       inputMessage: '',
       isLoading: false,
       quickQuestions: [
-        '如何预约护理服务？',
-        '颐养中心有哪些设施？',
+        '今天的膳食是什么？',
+        '还有多少床位？',
         '收费标准是什么？',
         '入住需要什么条件？',
         '有哪些康复项目？'
@@ -199,7 +199,7 @@ export default {
       this.messages = [
         {
           type: 'ai',
-          content: '您好！我是AI智能助手，很高兴为您服务。请问有什么可以帮助您的吗？',
+          content: '您好！我是东软颐养中心AI智能助手，很高兴为您服务。请问有什么可以帮助您的吗？',
           time: this.getCurrentTime()
         }
       ]

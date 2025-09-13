@@ -32,7 +32,7 @@ public class NursecontentServiceImpl extends ServiceImpl<NursecontentMapper, Nur
         List<Integer> itemIds = nurselevelitemMapper.selectObjs(qw);
         List<Nursecontent> nursecontents = new ArrayList<>();
         //判断是否有记录
-        if (itemIds.size() > 0) {
+        if (!itemIds.isEmpty()) {
             //②查询护理项目信息
             nursecontents = nursecontentMapper.selectByIds(itemIds);
         }
@@ -40,7 +40,7 @@ public class NursecontentServiceImpl extends ServiceImpl<NursecontentMapper, Nur
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ResultVo updateNurseItem(Nursecontent nursecontent) throws Exception {
+    public ResultVo<Void> updateNurseItem(Nursecontent nursecontent) throws Exception {
         //如果修改状态为-一停用，需要直接剔除护理级别护理项目列表中的对应的记录，保证列表中的项目都是可用状态
         if (nursecontent.getStatus() == 2) {
             //查询当前护理项目是否在护理级别护理项目列表中，如果在就需要进行剔除
